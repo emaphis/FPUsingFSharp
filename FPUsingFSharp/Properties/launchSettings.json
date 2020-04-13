@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FPUsingFSharp": {
+      "commandName": "Project",
+      "commandLineArgs": "Frigga"
+    }
+  }
+}
