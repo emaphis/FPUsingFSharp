@@ -3,7 +3,6 @@
 /// Values, operators, expressions and functions
 
 /// 2.1 Numbers. Truth values. The unit type
-
 // ints
 let int1 = 0
 let int2 = 1001
@@ -207,3 +206,29 @@ let eq1 = 3.5 = 2e-3
 let eq2 = "abc" <> "ab"
 
 
+let eqTxt x y =
+    if x = y then "equal" else "not equal"
+// when 'a : equality
+
+let ord1 = eqTxt 3 4
+let ord2 = eqTxt ' '  (char 32) 
+
+// Ordering
+// > >= < <=
+
+let ordText' x y = if x > y then "greater"
+                   else if x = y then "equal"
+                   else "less"
+// when 'a : comparison
+
+// using matching with guards
+let ordText x y = match compare x y with
+                  | t when t > 0  -> "greater"
+                  | 0             -> "equal" 
+                  | _             -> "less"
+
+
+/// 2.11 Function application operators |> and <|
+
+// arg |> fct means fct arg
+// fct <| arg means fct arg
