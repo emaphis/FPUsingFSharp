@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Lesson03.fsx" />
+    <None Include="Lesson04.fsx" />
+    <Compile Include="Lesson04Try.fsx" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+</Project>

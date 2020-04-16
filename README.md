@@ -7,3 +7,5 @@ Practicing Funtional Programming in F# using Michael R. Hansen's and Hans Rische
 Also using Isaac Abraham; "Get Programming with F#"
 
 <https://www.manning.com/books/get-programming-with-f-sharp>
+
+Source: <https://github.com/isaacabraham/get-programming-fsharp>
