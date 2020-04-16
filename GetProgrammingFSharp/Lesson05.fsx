@@ -24,6 +24,7 @@ let add'' (a, b) =
     let answer = a + b + "hello"
     answer
 
+
 // 5.2.1 Limitations of type inference
 
 // Type-inference works best with native F# type and .NET types, C#
