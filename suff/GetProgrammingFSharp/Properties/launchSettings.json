@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "MyFirstFSharpApp": {
-      "commandName": "Project",
-      "commandLineArgs": "HELLO WORLD"
-    }
-  }
-}
