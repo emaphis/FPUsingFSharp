@@ -13,6 +13,7 @@
     <None Include="Lesson05.fsx" />
     <None Include="Lesson06.fsx" />
     <None Include="Lesson07.fsx" />
+    <None Include="Lesson09.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
