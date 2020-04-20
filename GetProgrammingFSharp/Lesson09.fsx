@@ -1,8 +1,8 @@
-﻿//// Lesson 9 - Tuples
+﻿//// Lesson 9 - Shaping data wtih Tuples
 
 /// 9.2 Tuple basics
 
-/// Returning aritrary data pairs in F#
+// Listing 9.3 - Returning aritrary data pairs in F#
 let parseName(name: string) =
     let parts = name.Split(' ')
     let forename = parts.[0]
@@ -10,7 +10,7 @@ let parseName(name: string) =
     forename, surname
 
 let name = parseName("Issac Abraham")
-let forename, surname = name;
+let forename, surname = name;  // deconstructing
 
 let fname, sname = parseName("Issac Abraham")
 
@@ -20,7 +20,6 @@ let a1 = "Issac", "Abraham", 35
 // Let’s do a bit of hands-on work with tuples:
 
 // 1 Open a blank .fsx file for experimenting.
-
 // 2 Create a new function, parse, which takes in a string person that has the format
 //   playername game score (for example, Mary Asteroids 2500).
 // 3 Split the string into separate values.
@@ -61,38 +60,45 @@ let nameAndAge = "Joe", "Bloggs", 28
 
 /// 9.3.2 Nested tuples
 
+// Listing 9.4 - Returning more-complex arbitrary data pairs in F#
 let nameAndAge' = ("Joe", "Bloggs"), 28
 // val nameAndAge' : (string * string) * int
-let name2, age = nameAndAge'
-let (forename1, surname1), theAge = nameAndAge'
+let name2, age = nameAndAge'  // deconstructing
+let (forename1, surname1), theAge = nameAndAge'  // nested deconstruction
 
 let type1 = nameAndAge'.GetType()
 // System.Tuple`2[System.Tuple`2[System.String,System.String],System.Int32]
 
+
 /// 9.3.3 Wildcards
 
+// Listing 9.5 - Using wildcards with tuples
 let nameAndAge3 = "Jane", "Smith", 25
 let forename3, surname3, _ = nameAndAge3  // ignore 3rd element
 
+
 /// 9.3.4 Type inference with tuples
 
+// Listing 9.6 - Type inference with tuples in F#
 let explicit : int * int = 10, 5 
 let implicit = 10, 5
-let _, _ = implicit
+let _, _ = implicit  // ignore all elements
 
 let addNumbers arguments =
     let a, b = arguments
     a + b
 
 let ints1 = addNumbers explicit
-ints1
+ints1 = 15
 
-// Genericized functions with tuples
-let addNumbers' arguemnts =
+// Listing 9.7 - Genericized functions with tuples
+let addNumbers' arguemnts =   // int * int * 'a * 'b -> int
     let a, b, c, _ = arguemnts  // deconstruct a four-part tuple
     a + b
 
 let ints2 = addNumbers'(3, 4,'a','b')
+ints2 = 7
+
 
 (* Quick check 9.2
 1 What is the type signature of nameAndAge in listing 9.4? Why?
@@ -114,18 +120,17 @@ A- All?
 
 /// 9.4.1 Tuples and the BCL
 
-// Implicit mapping of 'out' parameters to tuples
+// Listing 9.8 - Implicit mapping of 'out' parameters to tuples
 
 // var number = "123";
 // var result = 0;
 // var parsed = System.Int32.TryParse(number, out result);
-
 let number = "123"
 let result, parsed = System.Int32.TryParse(number)
 
 /// 9.4.3 When not to use tuples
 // Tuples don't really have semantic meaning.
-
+// Too many elements are hard to fallow
 
 (* Quick check 9.3
 1 What’s generally considered the maximum size you should use for a tuple?

@@ -1,7 +1,11 @@
-﻿//// Lesso 10 - Shaping data with Records
+﻿//// Lesson 10 - Shaping data with Records
+
+
+/// 10.1 POCOs done right: records in F#
 
 /// 10.1.1 Record basics
 
+// Listing 10.4 - Immutable and structural equality record in F#
 type Address =
     { Street : string
       Town : string
@@ -10,14 +14,15 @@ type Address =
 
 /// 10.1.2 Creating records
 
-type Customer = 
+// Listing 10.5 - Constructing a nested record in F#
+type Customer =   // Declaring the Customr record type
     { Forename : string
       Surname : string
       Age : int
       Address : Address
       EmailAddress : string }
 
-let customer =
+let customer =    // Creating a Customer with Address inline
     { Forename = "Joe"
       Surname = "Bloggs"
       Age = 30
@@ -40,6 +45,7 @@ Let’s have a look at creating your own record type now:
   the record for you.
 *)
 
+// 1.
 type Car =
     { Manufacturer : string
       Engine : string
@@ -47,6 +53,7 @@ type Car =
       Doors : int
       Colour : string }
 
+// 2.
 let toyota =
    { Manufacturer = "Toyota"
      Engine = "four cylender"
@@ -69,27 +76,29 @@ A- Referential equality is equality of address location
 
 /// 10.2.1 Type inference with records
 
-let address : Address =
+// Listing 10.6 - Providing explicit types for constructing records
+let address : Address =  // Explicity declaring the type of the value
     { Street = "The Street"
       Town = "The Town"
       City = "The City" }
 
 let addressExplicit =
-    { Address.Street = "The Street"
+    { Address.Street = "The Street" // Explicity declaring the type of the field
       Town = "The Town"
       City = "The City" }
 
 
 /// 10.2.2 Working with immutable records
 
-// Copy-and-update record syntax
+// Listing 10.7 - Copy-and-update record syntax
 
-// update age
+// update age based on email address
 let updatedCustomer =
      { customer with 
          Age = 31
          EmailAddress = "joe@bloggs.co.uk" }
 
+// update passed customer
 let updateAge(customer, age) =
     { customer with Age = age }
 
@@ -98,8 +107,9 @@ let newCust = updateAge(customer, 32)
 
 /// 10.2.3 Equality checking
 
-let isSameAddress = (address = addressExplicit)
-isSameAddress
+// Listing 10.8 - Comparing two records in F#
+let isSameAddress = (address = addressExplicit)  // compare records using = operator
+isSameAddress = true
 
 
 (* Now you try
@@ -109,15 +119,18 @@ Let’s practically explore some of these features of records:
 3 Compare the two objects by using =, .Equals, and System.Object.ReferenceEquals.
 4 What are the results of all of them? Why?
 5 Create a function that takes in a customer and, using copy-and-update syntax,
-sets the customer’s Age to a random number between 18 and 45.
+  sets the customer’s Age to a random number between 18 and 45.
+6 The function should then print the customer’s original and new age, before
+  returning the updated customer record.
 *)
 
-type Address2 =
+type Address2 =   // 1.
     { Street : string
       Town : string
       City : string
       Zip : string }
 
+// 2.
 let address1 =
     { Street = "The Street"
       Town = "The Town"
@@ -130,22 +143,32 @@ let address2 =
       City = "The City"
       Zip = "55555" }
 
+// 3.
 let eq1 = address1 = address2           // true
-let eq2 = address.Equals(address2)      // false
+let eq2 = address1.Equals(address2)     // true
 let eq3 = System.Object.ReferenceEquals(address1, address2)  // false
-// '='   for structural equality
-// .Equals or .ReferenceEquals  test for referencial equality
 
+// 4.
+// '=', .Equals()  for structural equality
+// .ReferenceEquals  test for referencial equality
 
+// 5.
 System.Random().Next(27) + 18  // 18 ... 45
 
 /// update age given emailAddress
 let updateCustomerAge(customer) = 
-    System.Console.WriteLine(customer.ToString())
     let newAge = System.Random().Next(27) + 18
     {customer with Age = newAge}
 
-updateCustomerAge(customer)
+let newCust1 = updateCustomerAge(customer)
+
+// 6.
+let updateCustomerAge2(customer, newAge) = 
+    printfn "Age = %d, newAge = %d" customer.Age newAge
+    {customer with Age = newAge}
+
+let newCust2 = updateCustomerAge2(customer, 31)
+
 
 (* Quick check 10.2
 1 At runtime, what do records compile into?
@@ -160,10 +183,11 @@ A- Structural
 // TODO:
 
 /// 10.3.2 Shadowing
-
-let myHome = { Street = "The Street"; Town = "The Town"; City = "The City" }
-let myHome = { myHome with City = "The Other City" }
-let myHome = { myHome with City = "The Third City" }
+do
+    let myHome = { Street = "The Street"; Town = "The Town"; City = "The City" }
+    let myHome = { myHome with City = "The Other City" }
+    let myHome = { myHome with City = "The Third City" }
+    ()
 // State decomplected from Identity
 
 

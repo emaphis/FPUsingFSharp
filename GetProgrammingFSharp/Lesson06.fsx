@@ -3,14 +3,27 @@
 
 /// 6.2 Being explicit about mutation
 
-let mutable name = "issac"
-name = "kate"  // opps boolean
+/// 6.2.1 Mutability basics in F#
 
-name <- "kate"
-name
+// Listing 6.1 - Creating immutable values in F#
+let name = "issac"
+name = "kate"  // opps boolean - false
+
+// Listing 6.2 - Trying to mutate an immutable value
+// name <- "kate"  // error
+
+// Listing 6.3 - Creating a mutable variable
+let mutable name' = "issac"
+
+name' <- "kate"
+name' = "kate"  // true
+name'
+
 
 /// 6.2.2 Working with mutable objects
 
+// Now you try
+// Listing 6.4 - Working with mutable objects
 open System.Windows.Forms
 let form = new Form()
 form.Show()
@@ -18,12 +31,10 @@ form.Width <- 400
 form.Height <- 400
 form.Text <- "Hello from F#"
 
-// Short had for setting properties of mutable objects
-
+// Listing 6.5 - Short hand for setting properties of mutable objects
 open System.Windows.Forms
 let form2 = new Form(Text = "Hello from F# - 2", Width = 300, Height = 300)
 form2.Show()
-
 
 
 // Quick check 6.1
@@ -38,9 +49,9 @@ form2.Show()
 
 /// 6.3 Modeling state
 
-// 6.3.1 Working with mutable state
+/// 6.3.1 Working with mutable state
 
-// Managing state with mutable variables
+// Listing 6.6 - Managing state with mutable variables
 let mutable petrol = 100.0   // initial state
 
 let drive(distance) =       // modify state through mutation
@@ -54,9 +65,10 @@ drive("short")
 
 petrol   // check state
 
-// 6.3.2 Working with immutable data
 
-// Managing state with immutable values
+/// 6.3.2 Working with immutable data
+
+// Listing 6.7 - Managing state with immutable values
 let drive'(petrol, distance) =     // explicitly pass state
     if distance = "far" then petrol / 2.0
     elif distance = "medium" then petrol - 10.0
@@ -66,9 +78,8 @@ let petrol' = 100.0
 let firstState = drive'(petrol', "far")
 let secondState = drive'(firstState, "medium")
 let finalState = drive'(secondState, "short")
+finalState = 39.0;;
 
-finalState
-;;
 
  // Now you try
  let drive''(petrol, distance:int) =     // explicitly pass state
@@ -80,9 +91,8 @@ finalState
 let petrol'' = 100.0
 let firstState' = drive''(petrol'', 75)
 let secondState' = drive''(firstState', 35);;
-let finalState' = drive''(secondState', 15)
- 
-finalState'
+let finalState' = drive''(secondState', 15) 
+finalState' = 39.0
 
 
 /// 6.3.3 Other benefits of immutable data
