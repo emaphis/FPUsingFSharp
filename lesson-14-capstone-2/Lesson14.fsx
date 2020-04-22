@@ -1,6 +1,5 @@
 ﻿//// Lesson 14 - Capstone 2
 
-
 (*  14.1 Defining the problem
 1 The application should allow a customer to deposit and withdraw from an
   account that the customer owns, and maintain a running total of the balance in
@@ -30,6 +29,60 @@
 
 9 The system should print out the updated balance to the user after every
   transaction.
-
 *)
 
+///14.3  Getting started
+// Create project Lesson14
+
+/// 14.4 Creating a domain
+
+#load "Domain.fs"
+open Capstone2.Domain
+
+let customer = { Name = "Mary"}
+let account = 
+    { AccountID = "10001"
+      Balance = 100M
+      Owner = customer }
+
+
+/// 14.5 Creating behaviors
+
+#load "Operations.fs"
+open Capstone2.Operations
+
+let acct1 = withdraw 50M account
+let amt1 = acct1.Balance
+amt1 = 50M
+
+let acct2 = deposit 100M acct1
+let amt2 = acct2.Balance
+amt2 = 150M
+
+let acct3 = account |> deposit 50M |> withdraw 25M |> deposit 10M 
+acct3.Balance = 135M
+
+/// 14.6 Abstraction and reuse through higher-order functions
+
+#load "Auditing.fs"
+open Capstone2.Auditing
+
+consoleAudit account "Testing console audit"
+// fileSystemAudit account "Testing file audit"
+
+/// 14.6.1 Adapting code with higher-order functions
+
+/// Listing 14.6 Partially applying a curried function
+
+let account2 = { AccountID = "10002"; Owner = { Name = "Fred"}; Balance = 100M }
+
+account2
+    |> deposit 100M
+    |> withdraw 50M
+
+let withdrawWithConsoleAudit = auditAs "withdraw" consoleAudit withdraw
+let depositWithConsoleAudit = auditAs "deposit" consoleAudit deposit
+
+account2
+    |> depositWithConsoleAudit 100M
+    |> withdrawWithConsoleAudit 50M
