@@ -9,7 +9,7 @@
   <ItemGroup>
     <None Include="Lesson03.fsx" />
     <None Include="Lesson04.fsx" />
-    <Compile Include="Lesson04Try.fsx" />
+    <None Include="Lesson04Try.fsx" />
     <None Include="Lesson05.fsx" />
     <None Include="Lesson06.fsx" />
     <None Include="Lesson07.fsx" />
@@ -20,6 +20,7 @@
     <None Include="Lesson13.fsx" />
     <None Include="Lesson15.fsx" />
     <None Include="Lesson16.fsx" />
+    <None Include="Lesson17.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
