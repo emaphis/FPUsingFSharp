@@ -29,10 +29,12 @@ let results =
 /// 15.1.1 In-place collection modifications
 
 /// Listing 15.2 An imperative solution to a calculation over data
+// Evaluate generic datatype 'summary' with the code that uses it so
+// the compiler can calculate it's datattype.....
 open System.Collections.Generic
 
 type TeamSummary = { Name : string; mutable AwayWins : int }
-let summary = ResizeArray<TeamSummary>()
+let summary = ResizeArray()
 
 for result in results do
     if result.AwayGoals > result.HomeGoals then

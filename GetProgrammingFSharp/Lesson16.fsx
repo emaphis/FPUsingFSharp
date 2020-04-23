@@ -25,7 +25,9 @@ persons |> List.map (fun person -> person.Town)
 let numbers = [ 1 .. 10 ]
 let timesTwo n = n * 2
 
-let outputImperative = ResizeArray<int>()
+// evaluate ResizeArray with it's use so the compiler can
+// infer it's types
+let outputImperative = ResizeArray()
 
 for number in numbers do
     outputImperative.Add (number |> timesTwo)
