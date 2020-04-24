@@ -5,6 +5,7 @@
 /// 16.1.1 map
 // mapping:('T -> 'U) -> list:'T list -> 'U list
 
+/// Figure 16.1
 open System
 
 type Person =
@@ -17,10 +18,10 @@ let persons =
       { Name = "Tim"; Town = "London" }
       { Name = "Michelle"; Town = "Manchester" } ]
 
-
-/// Listing 16.1 map
-
 persons |> List.map (fun person -> person.Town)
+
+
+/// Listing - 16.1 map
 
 let numbers = [ 1 .. 10 ]
 let timesTwo n = n * 2
@@ -92,7 +93,9 @@ open System
   |> List.map(fun (a, b) -> a - b)
   |> List.map(fun time -> time.TotalDays)
 
+  // windowed example
 [ 1; 2; 3; 4; 5; 6 ] |> List.windowed 3
+
 
 (* Quick check 16.1
 1 What is the F# equivalent of LINQ’s Select method?
@@ -104,6 +107,7 @@ A- for-each loop
 3 What does the pairwise function do?
 A- It partitions a sequence into pairs
 *)
+
 
 /// 16.2 Grouping functions
 // groups data into logical groups
@@ -134,7 +138,7 @@ let londonCustomers, otherCustomers =
 1 When would you use countBy compared to groupBy?
 A- groupBy groups elements into groups based on criteria, countBy counts instead of groups
 2 Why would you use groupBy as opposed to partition?
-
+A- groupBy groups to an unlimited number pf groups, partition is binary
 *)
 
 
@@ -168,6 +172,7 @@ let numberOne =
     |> Seq.ofArray
     |> Seq.head
 
+
 (* Quick check 16.3
 1 What is the F# equivalent to LINQ’s Aggregate method?
 A- fold
@@ -177,11 +182,14 @@ A- truncate
 A-  Performance or resource reasons.
 *)
 
-/// Try this
+/// Try this - pg 196
+// TODU: not finished
 open System.IO
-let path = @"C:\src\"
+let path = @"C:\src\dotnet\"
 let files = 
     Directory.GetDirectories(path)
-    |> Array.map (fun dir -> Directory.GetFiles(dir)) 
+    |> Seq.toList
+    |> List.map (fun dir -> (Directory.GetCurrentDirectory(), Directory.GetFiles(dir)))
+    |> List.map (fun dir -> (fst dir, Seq.toList(snd dir)))
 
 Directory.EnumerateDirectories(path)
