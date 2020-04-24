@@ -17,7 +17,7 @@ A- Lamba (unnamed) functions
 
 /// 13.2.1 Basics of higher-order functions
 
-/// Now you try
+/// Now you try - pg 154
 
 /// Listing 13.5 - Your first higher-order function in F#
 type Customer =
@@ -54,4 +54,20 @@ A-
 
 /// 13.3 Dependencies as functions
 
+/// Now you try - pg 157
 // See Lesson13Try.fsx
+
+
+/// Try this - pg 159
+
+open System.Net
+
+let downloader (client : WebClient) (uri : string) =
+    let text = client.DownloadString(uri)
+    text
+
+let webClient = new WebClient()
+
+let webDownloader = downloader webClient
+
+let text = webDownloader "https://fsharp.org"

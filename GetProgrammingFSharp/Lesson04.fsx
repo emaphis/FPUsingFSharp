@@ -2,13 +2,13 @@
 
 /// 4.2 Binding values in F#
 
-// Listing 4.1
+// Listing 4.1 - Sample let bindings
 let age = 35
 let website = System.Uri "https://fsharp.org"
 let add(first, second) = first + second
 
 
-(* Now you try.
+(* Now you try.  pg 50
 You’ll now experiment with binding values to symbols:
 1 Create a new F# script file.
 2 Bind some values to symbols yourself:
@@ -110,7 +110,7 @@ let estimatedAges(familyName, year1, year2, year3) =
 // Private fields                       - Local values
 // Private methods                      - Local functions
 
-/// Now you try
+/// Now you try - pg 55
 // See. lesson4Try.  Listing 4.8
 
 
@@ -136,7 +136,7 @@ answer'
 // 3. No. Don't user a return statment for a return value.
 
 
-// Try this
+// Try this - pg 57.
 // creating a set of functions that are deeply nested
 // within one another. What happens if you call a function
 // for example, Random.Next()

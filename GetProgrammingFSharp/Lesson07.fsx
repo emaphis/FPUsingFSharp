@@ -42,7 +42,7 @@ describeAge // age:int -> unit
 let x = describeAge 20  // unit = ()
 
 
-/// Now you try
+/// Now you try - pg 87
 
 // 1 Create an instance of unit by using standard let binding syntax; the right-hand
 //   side of the equals sign needs to be ().
@@ -50,6 +50,8 @@ let myUnit1 = ()
 
 // 2 Call the describeAge function and assign the result of the function call to a separate
 //   value.
+
+// 3 Check whether the two values are equal to one another. What is the result?
 
 let myUnit2 = describeAge 45
 
@@ -60,6 +62,7 @@ Console.WriteLine(bool1)
 /// 7.2.4  Discarding results
 
 // Listing 7.6 - Discarding the result of an expression
+//         7.7 - Explicitly ignoring the result of an expression
 let writeTextToDisk text =
     let path = System.IO.Path.GetTempFileName()
     System.IO.File.WriteAllText(path, text)
@@ -83,6 +86,7 @@ A - ignore consumes a value ad returns a unit. It is used for functions
 
 
 /// 7.3 Forcing statement-based evaluation
+//    ensuring each branche returns unit
 
 // Listing 7.8 - Forcing statement-based code with unit
 let now = System.DateTime.UtcNow.TimeOfDay.TotalHours
@@ -97,7 +101,7 @@ else ()   // explicity returning unit for final case
 // A-  Yes, usin ignore or returning ()
 
 
-(* Try this
+(* Try this - pg 91
 Try to port some statement-oriented code you’ve written in C# to F#, making it
 expression-based in the process. What’s its impact? Then, create a program that can
 read the user’s full name from the console and print the user’s first name only. Thinking
@@ -124,7 +128,7 @@ let printFirstNameExp () =
         System.Console.WriteLine(firstName)
 
     let name = getName ()
-    let first = getFirstName(name)
-    printFirstName(first)
+    let first = getFirstName name
+    printFirstName first
 
 printFirstNameExp ()

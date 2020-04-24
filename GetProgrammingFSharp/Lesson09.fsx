@@ -16,7 +16,7 @@ let fname, sname = parseName("Issac Abraham")
 
 let a1 = "Issac", "Abraham", 35
 
-// Now you try
+// Now you try - pg 104
 // Let’s do a bit of hands-on work with tuples:
 
 // 1 Open a blank .fsx file for experimenting.
@@ -85,7 +85,7 @@ let implicit = 10, 5
 let _, _ = implicit  // ignore all elements
 
 let addNumbers arguments =
-    let a, b = arguments
+    let a, b = arguments   // arguments is a tuple int * int
     a + b
 
 let ints1 = addNumbers explicit

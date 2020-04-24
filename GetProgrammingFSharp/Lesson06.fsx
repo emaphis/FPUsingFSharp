@@ -22,7 +22,7 @@ name'
 
 /// 6.2.2 Working with mutable objects
 
-// Now you try
+// Now you try - pg 74.
 // Listing 6.4 - Working with mutable objects
 open System.Windows.Forms
 let form = new Form()
@@ -51,7 +51,8 @@ form2.Show()
 
 /// 6.3.1 Working with mutable state
 
-// Listing 6.6 - Managing state with mutable variables
+/// Now you try - pg 76 
+/// Listing 6.6 - Managing state with mutable variables
 let mutable petrol = 100.0   // initial state
 
 let drive(distance) =       // modify state through mutation
@@ -81,7 +82,7 @@ let finalState = drive'(secondState, "short")
 finalState = 39.0;;
 
 
- // Now you try
+ // Now you try pg 79 - Change strings to integers
  let drive''(petrol, distance:int) =     // explicitly pass state
      if   distance >= 50 then petrol / 2.0
      elif distance >= 25 then petrol - 10.0
@@ -109,7 +110,7 @@ A - It makes it easier to work with since it doesn't create shared glbal stae
 *)
 
 
-/// Try this
+/// Try this pg 80
 
 // 1 Try modeling another state machine with immutable data—for example, a kettle
 //   that can be filled with water, which is then poured into a teapot or directly into a

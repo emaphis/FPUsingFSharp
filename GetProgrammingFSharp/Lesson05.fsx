@@ -13,7 +13,7 @@
 
 /// 5.2 F# type-inference basics
 
-// Listing 5.6 - explicit type annotations in F#
+// Listing 5.5 - explicit type annotations in F#
 let add (a:int, b:int) : int =
     let answer:int = a + b
     answer
@@ -21,7 +21,7 @@ let add (a:int, b:int) : int =
 // Listing 5.6 - Omitting the return type from a function in F#
 let add' (a, b) = a + b
 
-(* Now you try
+(* Now you try - pg 64
 Experiment with this code a little more to see how the compiler responds to code
 changes:
 1 Mix some type annotations on the function—for example, mark a as int and b as
@@ -111,7 +111,14 @@ let result1 = sayHello(10.0)
 let result2 = sayHello(20.5)
 
 
+/// Now you try - pg 68
+// You get errors with most changes, the function is tightly constrained
+
+
 /// Quick check 5.3
 // Type annotations can help spot and narrow down type errors.
 // This is especially helpful when you explicitly know the type of an
 // expression
+
+/// Try this - pg 69
+// TODO:

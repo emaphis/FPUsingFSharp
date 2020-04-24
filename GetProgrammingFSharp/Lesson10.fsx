@@ -36,7 +36,7 @@ let customer =    // Creating a Customer with Address inline
 let name1  = customer.Surname
 let street1 = customer.Address.Street
 
-(* Now you try
+(* Now you try - pg 117
 Let’s have a look at creating your own record type now:
 1 Define a record type in F# to store data on a Car, such as manufacturer, engine
    size, number of doors, and so forth.
@@ -76,7 +76,7 @@ A- Referential equality is equality of address location
 
 /// 10.2.1 Type inference with records
 
-// Listing 10.6 - Providing explicit types for constructing records
+/// Listing 10.6 - Providing explicit types for constructing records
 let address : Address =  // Explicity declaring the type of the value
     { Street = "The Street"
       Town = "The Town"
@@ -112,7 +112,7 @@ let isSameAddress = (address = addressExplicit)  // compare records using = oper
 isSameAddress = true
 
 
-(* Now you try
+(* Now you try - pg 120
 Let’s practically explore some of these features of records:
 1 Define a record type, such as the Address type shown earlier.
 2 Create two instances of the record that have the same values.
@@ -183,11 +183,14 @@ A- Structural
 // TODO:
 
 /// 10.3.2 Shadowing
+
 do
     let myHome = { Street = "The Street"; Town = "The Town"; City = "The City" }
     let myHome = { myHome with City = "The Other City" }
     let myHome = { myHome with City = "The Third City" }
+    myHome
     ()
+
 // State decomplected from Identity
 
 
@@ -201,3 +204,14 @@ A- Reusing a reference for a new (updated) value
 2 When should you use records?
 A- For data with many fields (>3) and data that represents a concept.
 *)
+
+(* Try this  - pg 124
+1 Model the Car example from lesson 6, but use records to model the state of the Car.
+2 Take an existing set of classes that you have in an existing C# project and map as
+records in F#. Are there any cases that don’t map well?
+*)
+
+// 1
+type Car2 = { petrol : int }
+
+// 2 - TODO:

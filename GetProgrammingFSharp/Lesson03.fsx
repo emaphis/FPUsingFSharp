@@ -1,8 +1,17 @@
 ﻿/// Lesson 3 -  REPL Changing how we develop
 
-/// 3.2.2 State in FSI
+/// 3.2 Enter the REPL
 
-// Listing 3.1
+/// 3.2.3 State in FSI
+
+let currentTime = System.DateTime.UtcNow
+currentTime.TimeOfDay.ToString()
+
+
+// Now you try pg 39
+printfn "Hello World"
+
+/// Listing 3.1 - A simple let binding
 let CurrenTime = System.DateTime.UtcNow
 CurrenTime.TimeOfDay.ToString()
 
@@ -25,16 +34,19 @@ A- FSI.exe
 
 /// 3.3 F# scripts in Visual Studio
 
+/// Now you try pg 41,43
 let text1 = "Hello, world"
+text1.Length
 
 
 /// 3.3.3 Woring with functions in scripts
 
-// Listing 3.2
+// Listing 3.2 A simple function definition
 let greetPerson name age =
     sprintf "Hello, %s. Your are %d years old" name age
 
 let greeting = greetPerson "Fred" 25
+
 
 (* Quick check 3.2
 1 Do scripts need a project in order to run?
@@ -45,7 +57,7 @@ A- For IDE features for editing code, and a way to dave work.
 *)
 
 
-/// Do this
+/// Try this - pg 4
 
 // count the words in a string
 let countWords(text : string) =

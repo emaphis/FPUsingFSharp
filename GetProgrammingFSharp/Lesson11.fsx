@@ -2,8 +2,6 @@
 
 /// 11.1 Partial function application
 
-// Passing arguments with and without brackets
-
 // Listing 11.1 - Passing arguments with and without brackets
 let tupleAdd(a,b) = a + b   // tupled: int * int -> int
 let ans1 = tupleAdd (5,10)
@@ -27,18 +25,21 @@ A- Tupled functions take one arguement, a tuple. A curried function takes
 
 /// 11.2 Constraining functions
 
-// Listing 11.3 - Explicitly creating wrapper functions in F#
+/// Listing 11.3 - Explicitly creating wrapper functions in F#
 open System
 let buildDt year month day = DateTime(year, month, day)
+
+// wraper functions
 let buildDtThisYear month day = buildDt DateTime.UtcNow.Year month day
 let buildDtThisMonth day = buildDtThisYear DateTime.UtcNow.Month day
 
-// Listing 11.4 - Creating wrapper functions by curryinng
+
+/// Listing 11.4 - Creating wrapper functions by currying
 let buildDtThisYear' = buildDt DateTime.UtcNow.Year
 let buildDtThisMonth' = buildDtThisYear' DateTime.UtcNow.Month
 
 
-(* Now you try
+(* Now you try - pg 129
 Create a simple wrapper function, writeToFile, for writing data to a text file:
 1 The function should take in three arguments in this specific order:
   a date—the current date
@@ -54,13 +55,15 @@ Create a simple wrapper function, writeToFile, for writing data to a text file:
   override—for example, ToString("yyMMdd"). You need to explicitly annotate the type
   of date as System.DateTime.
 *)
+/// Listing 11.5 - Creating your first curried function
 open System.IO
 // 1. 2. 3. 4. 5.
 let writeToFile (date : DateTime) filename text =
     let path = sprintf "%s-%s.txt" (date.ToString "yyMMdd") filename
     File.WriteAllText(path, text)
 
-/// Listing 11.5 - Creating your first curried function
+// writeToFile : date:DateTime -> filename:string -> text:string -> unit
+
 
 /// Listing 11.6 - Creating constrained functions
 let writeToToday = writeToFile DateTime.UtcNow.Date
@@ -110,18 +113,26 @@ Directory.GetCurrentDirectory()
 // Consolas vs Fira Code for rendering special operators
 
 
-/// Now you try
-
-/// Listing 11.12 Using pipelines to implicitly pass chained state
+/// Now you try - pg 134
 let drive distance petrol =
     if distance = "far" then petrol / 2.0
     elif distance = "medium" then petrol - 10.0
     else petrol - 1.0
 
+/// Listing 11.11 Review of existing petrol sample - old version
 let startingPetrol = 100.0
 
+let petrol1 = drive "far" startingPetrol
+let petrol2 = drive "medium" petrol1
+let petrol3 = drive "short" petrol2
+
+petrol3 = 39.0
+
+/// Listing 11.12 Using pipelines to implicitly pass chained state
+let startingPetrol2 = 100.0
+
 let endingPetrol =
-    startingPetrol
+    startingPetrol2
     |> drive "far"
     |> drive "medium"
     |> drive "short"
@@ -156,3 +167,6 @@ A- >>
 2 What rule do you need to adhere to in order to compose two functions together?
 A- Functions have to take and return the sam type
 *)
+
+/// Try this  - pg 137
+// TODO:
