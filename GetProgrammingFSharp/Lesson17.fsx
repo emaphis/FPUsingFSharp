@@ -13,15 +13,16 @@ inventory.Add("Oranges", 0.23)
 inventory.Add("Bananas", 0.45)
 
 inventory.Remove "Oranges"
+
 let bananas = inventory.["Bananas"]
 let oranges = inventory.["Oranges"]  // exception
 
 
 /// Listing 17.2 - Generic type inference with Dictionary
-let inventory2 = Dictionary<_,_>()
+let inventory2 = Dictionary<_,_>()  // explicit placeholder for generic type arguments
 inventory2.Add("Apples", 0.33)
 
-let inventory3 = Dictionary()
+let inventory3 = Dictionary()    // omitting generic type arguments
 inventory3.Add("Apples", 0.33)
 
 
@@ -60,10 +61,12 @@ A- for immuatable dictionaries - final truth
 /// Listing 17.4 - Using the F# Map lookup
 let inventory5 =
     [ "Apples", 0.33; "Oranges", 0.23; "Bannana", 0.45 ]
-    |> Map.ofList
+    |> Map.ofList  // list to map
+
 let apples = inventory5.["Apples"]
 let pineapples = inventory5.["Pineapples"] // keyNotFoundException
 
+// return new maps
 let newInventory5 =
     inventory5
     |> Map.add "Pineapples" 0.87
@@ -78,18 +81,75 @@ let cheapFruit, expensiveFruit =
     inventory5
     |> Map.partition(fun fuit cost -> cost < 0.3)
 
-// page 201
+
+(* Now you try - page 201
+Now you’re going to create a lookup for all the root folders on your hard disk and the
+times that they were created:
+1 Open a blank script.
+2 Get a list of all directories within the C:\ drive on your computer (you can use
+  System.IO.Directory.EnumerateDirectories). The result will be a sequence of strings
+3 Convert each string into a full DirectoryInfo object. Use Seq.map to perform the
+  conversion.
+4 Convert each DirectoryInfo into a tuple of the Name of the folder and its Creation-
+  TimeUtc, again using Seq.map.
+5 Convert the sequence into a Map of Map.ofSeq.
+6 Convert the values of the Map into their age in days by using Map.map. You can subtract
+  the creation time from the current time to achieve this.
+*)
+
+open System
+open System.IO
+
+let rootDirs =
+    let now = DateTime.UtcNow;
+    Directory.EnumerateDirectories(@"c:\")                // 2.
+    |> Seq.map (fun path -> DirectoryInfo path)           // 3.
+    |> Seq.map (fun dir -> (dir.Name, dir.CreationTimeUtc))  // 4.
+    |> Map.ofSeq                                             // 5.
+    |> Map.map (fun key time -> (now - time).Days)           // 6.
+
+for dir in rootDirs do
+    Console.WriteLine(dir)
 
 
+(* Quick check 17.2
+1 What’s the main difference between Dictionary and Map?
+A- Map is immutable, Dictionary is mutable
+
+2 When should you use Dictionary over Map?
+A- Dictionary has better performance, has better interoperability 
+*)
 
 
+/// 17.3 Sets
+
+/// Listing 17.6 - Creating a set from a sequence
+let myBasket = [ "Apples"; "Apples"; "Apples"; "Bananas"; "Pineapples"  ]
+let fruitsILike = myBasket |> Set.ofList
+
+/// Listing 17.7 - Comparing List- and Set-based operationsS
+let yourBasket = [ "Kiwi"; "Bananas"; "Grapes" ]
+let allFruitsList = (myBasket @ yourBasket) |> List.distinct
+
+let fruitsYouLike = yourBasket |> Set.ofList
+let allFruits = fruitsILike + fruitsYouLike
+
+/// Listing 17.8 - Sample Set-based operations
+
+// gets fruits in A that are not in B
+let fruitsJustForMe = allFruits - fruitsYouLike
+
+// Gets fruits that exist in both A and B
+let fruitsWeCanShare = fruitsILike |> Set.intersect fruitsYouLike
+
+// Are all fruits in A also in B
+let doILikeAllYOurFruis = fruitsILike |> Set.isSubset fruitsYouLike
 
 
+(* Quick check 17.3 
+What function might you use to simulate simple set-style behavior in a list?
+A- Distinct , DistinctBy
+*)
 
-
-
-
-
-
-
-
+/// Try this - pg 205
+// TODO:
