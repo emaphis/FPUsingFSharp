@@ -183,7 +183,7 @@ A-  Performance or resource reasons.
 *)
 
 /// Try this - pg 196
-// TODU: not finished
+// TODO: not finished
 open System.IO
 let path = @"C:\src\dotnet\"
 let files = 
