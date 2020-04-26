@@ -178,7 +178,7 @@ type Rule = string -> bool * string
 
 let rules : Rule list =
     [ fun text -> (text.Split ' ').Length = 3, "Must be three words"
-      fun text -> text.Length <= 30, "Max lenth is 30 characters"
+      fun text -> text.Length <= 30, "Max length is 30 characters"
       fun text -> text
                 |> Seq.filter Char.IsLetter
                 |> Seq.forall Char.IsUpper, "All letters must be caps" ]
@@ -218,8 +218,72 @@ validate word1
 validateM word1
 // val it : bool * string = (false, "All letters must be caps")
 
-/// Now you tru - pg 217
+
+(* Now you try - pg 217
+
+You might have found that last bit of code hard to understand at first. Let’s explore it so
+you can better understand what happened:
+
+1 Put printfn statements inside the rules themselves (for example, printfn "Running 3-
+  word rule…") so you can see what’s happening here. You’ll have to make each rule a
+  multiline lambda to do this.
+
+2 Move the rules into a separate module as let-bound functions.
+
+3 Add a new rule to the collection of rules that fails if any numbers are in the text
+  (the System.Char class has helpful functions here!).
+*)
+
 // See Lesson18Parser.fs
+
+
+#load "Lesson18Parser.fs"
+open Lesson18Parser
+
+let rules1 : Rule list =
+    [ threeWords; maxLength30; allUppercase; notAnyDigits ]
+
+let validate1 = buildValidator rules1
+
+// should pass
+let word0 = "HELLO FROM F#"
+validate1 word0
+
+// fail capital letters
+let words1 = "HELLO FrOM F#"
+validate1 words1
+
+// fail max length
+let words2 = "HELLOFROMF# ITSA FUNCTIONALLANGUAGE"
+validate1 words2
+
+// fail three words
+let words3 = "ONE TWO THREE FOR"
+validate1 words3
+
+// fail - digts
+let word4 = "HELLO FROM F8"
+validate1 word4
+
+(* Quick check 18.3
+1 What OO pattern is equivalent to reducing functions together?
+A- Composite pattern
+
+2 What happens to a type alias after compilation? Is it available at runtime?
+A- No. They don't exist as a runtime component. 
+*)
+
+
+(* Try this - pg. 218
+// TODO: See Lesson 17 pg 205
+Create a simple rules engine over the filesystem example from the previous lesson. The
+engine should filter out files that don’t pass certain checks, such as being over a specific
+file size, having a certain extension, or being created before a specific date. Have you
+ever created any rules engines before? Try rewriting them in the style we defined in this
+lesson
+*)
+
+
 
 
 
@@ -236,5 +300,3 @@ myFold (+) 0 [ 1; 2; 3; 4; 5 ]
 
 let ssss = seq<int>
 ///ssss.Add(1)
-
-System.Console.WriteLine("Got here aaaa")
