@@ -2,22 +2,20 @@
 
 /// 3.2 Enter the REPL
 
-/// 3.2.3 State in FSI
-
-let currentTime = System.DateTime.UtcNow
-currentTime.TimeOfDay.ToString()
-
-
 // Now you try pg 39
 printfn "Hello World"
 
-/// Listing 3.1 - A simple let binding
+System.DateTime.UtcNow.ToString()
+
+
+/// 3.2.3 State in FSI
+
+/// Listing 3.1 - A simple let binding - pg 40
 let CurrenTime = System.DateTime.UtcNow
 CurrenTime.TimeOfDay.ToString()
 
 
 /// 3.3.1  Creating scripts in F#
-
 let text = "Hello, world"
 text.Length
 
@@ -41,14 +39,14 @@ text1.Length
 
 /// 3.3.3 Woring with functions in scripts
 
-// Listing 3.2 A simple function definition
+// Listing 3.2 A simple function definition - pg 43
 let greetPerson name age =
     sprintf "Hello, %s. Your are %d years old" name age
 
-let greeting = greetPerson "Fred" 25
+let greeting = greetPerson "Fred" 25 
 
 
-(* Quick check 3.2
+(* Quick check 3.2  - pg 43
 1 Do scripts need a project in order to run?
 A- no
 
@@ -57,7 +55,7 @@ A- For IDE features for editing code, and a way to dave work.
 *)
 
 
-/// Try this - pg 4
+/// Try this - pg 44
 
 // count the words in a string
 let countWords(text : string) =

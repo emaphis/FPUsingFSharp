@@ -5,14 +5,14 @@
 
 /// 6.2.1 Mutability basics in F#
 
-// Listing 6.1 - Creating immutable values in F#
+// Listing 6.1 - Creating immutable values in F#  - pg 72
 let name = "issac"
 name = "kate"  // opps boolean - false
 
 // Listing 6.2 - Trying to mutate an immutable value
 // name <- "kate"  // error
 
-// Listing 6.3 - Creating a mutable variable
+// Listing 6.3 - Creating a mutable variable - pg 73
 let mutable name' = "issac"
 
 name' <- "kate"
@@ -31,13 +31,13 @@ form.Width <- 400
 form.Height <- 400
 form.Text <- "Hello from F#"
 
-// Listing 6.5 - Short hand for setting properties of mutable objects
+// Listing 6.5 - Short hand for setting properties of mutable objects - 75
 open System.Windows.Forms
 let form2 = new Form(Text = "Hello from F# - 2", Width = 300, Height = 300)
 form2.Show()
 
 
-// Quick check 6.1
+// Quick check 6.1  - pg 75
 // 1 What keyword do you use to mark a value as mutable in F#?
 // A - mutable
 // 2 What is the difference between = in C# and F#?
@@ -64,12 +64,12 @@ drive("far")    // modify state
 drive("medium")
 drive("short")
 
-petrol   // check state
+petrol = 39.0   // check state
 
 
 /// 6.3.2 Working with immutable data
 
-// Listing 6.7 - Managing state with immutable values
+// Listing 6.7 - Managing state with immutable values - pg 77
 let drive'(petrol, distance) =     // explicitly pass state
     if distance = "far" then petrol / 2.0
     elif distance = "medium" then petrol - 10.0
@@ -98,7 +98,7 @@ finalState' = 39.0
 
 /// 6.3.3 Other benefits of immutable data
 
-(* Quick check 6.2
+(* Quick check 6.2  - pg 79
 1 How do you handle changes in state when working with immutable data?
 A - You return new state from functions
 
@@ -128,8 +128,8 @@ let amount3 = kettle(amount2, 4)
 System.Console.WriteLine(amount3)
 
 
-// 1 Try modeling another state machine with immutable data—for example, a kettle
-//    that can be filled with water, which is then poured into a teapot or directly into a
-///   cup.
+// 2 Look at working with BCL classes that are inherently mutable, such as
+//   System.Net.WebClient. Explore various ways to create and modify them
 
 let web1 = new System.Net.WebClient()
+//web1.

@@ -1,9 +1,9 @@
-﻿//// 7 - EXPRESSIONS AND STATEMENTS
+﻿//// 7 - EXPRESSIONS AND STATEMENTS  - pg 81
 
 
 /// 7.1.2 Making life better through expressions
 
-(* Quick check 7.1
+(* Quick check 7.1  - pg 85
 1 How often do expressions return a value?
 A - Expressions always return values.
 
@@ -19,7 +19,7 @@ A - A method call.
 
 /// 7.2.1 working with expressions
 
-// Listing 7.3 - Working with expressions in F#
+// Listing 7.3 - Working with expressions in F#  - pg 86
 open System
 
 let describeAge age =
@@ -37,6 +37,7 @@ describeAge 64
 /// 7.2.3 Introducing unit
 
 // Listing 7.5 - Replacing void methods with functions that return unit
+// pg 87
 describeAge // age:int -> unit
 "Test".GetHashCode  // unit -> int
 let x = describeAge 20  // unit = ()
@@ -50,18 +51,16 @@ let myUnit1 = ()
 
 // 2 Call the describeAge function and assign the result of the function call to a separate
 //   value.
-
-// 3 Check whether the two values are equal to one another. What is the result?
-
 let myUnit2 = describeAge 45
 
+// 3 Check whether the two values are equal to one another. What is the result?
 let bool1 =  myUnit1 = myUnit2
 Console.WriteLine(bool1)
 
 
 /// 7.2.4  Discarding results
 
-// Listing 7.6 - Discarding the result of an expression
+// Listing 7.6 - Discarding the result of an expression  - pg 88, 89
 //         7.7 - Explicitly ignoring the result of an expression
 let writeTextToDisk text =
     let path = System.IO.Path.GetTempFileName()
@@ -88,13 +87,14 @@ A - ignore consumes a value ad returns a unit. It is used for functions
 /// 7.3 Forcing statement-based evaluation
 //    ensuring each branche returns unit
 
-// Listing 7.8 - Forcing statement-based code with unit
+// Listing 7.8 - Forcing statement-based code with unit  - pg 90
 let now = System.DateTime.UtcNow.TimeOfDay.TotalHours
 
-if now < 12.0 then Console.WriteLine "Its morning"
-elif now < 18.0 then Console.WriteLine "It's afternoon"
-elif now < 20.0 then ignore(5 + 5)   // ignoring expression
-else ()   // explicity returning unit for final case
+let desc =
+    if now < 12.0 then Console.WriteLine "Its morning"
+    elif now < 18.0 then Console.WriteLine "It's afternoon"
+    elif now < 20.0 then ignore(5 + 5)   // ignoring expression
+    else ()   // explicity returning unit for final case
 
 
 /// Quick check 7.3 Is it possible to work with statements rather than expressions in F#?

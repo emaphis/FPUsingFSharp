@@ -1,8 +1,8 @@
-﻿//// Lesson 9 - Shaping data wtih Tuples
+﻿//// Lesson 9 - Shaping data wtih Tuples - pg 101
 
 /// 9.2 Tuple basics
 
-// Listing 9.3 - Returning aritrary data pairs in F#
+/// Listing 9.3 - Returning aritrary data pairs in F#  -pg 103
 let parseName(name: string) =
     let parts = name.Split(' ')
     let forename = parts.[0]
@@ -11,10 +11,10 @@ let parseName(name: string) =
 
 let name = parseName("Issac Abraham")
 let forename, surname = name;  // deconstructing
-
 let fname, sname = parseName("Issac Abraham")
 
 let a1 = "Issac", "Abraham", 35
+
 
 // Now you try - pg 104
 // Let’s do a bit of hands-on work with tuples:
@@ -41,7 +41,7 @@ let a,b,c = parse("Mary Asteroids 2500")  // 6,7
 
 /// 9.2.1 When should I use tuples?
 
-(* Quick check 9.1
+(* Quick check 9.1  - pg. 105
 1 How would you separate values in a tuple in F#?
 A - Pattern matching to a comma separated list of vars
 
@@ -60,7 +60,7 @@ let nameAndAge = "Joe", "Bloggs", 28
 
 /// 9.3.2 Nested tuples
 
-// Listing 9.4 - Returning more-complex arbitrary data pairs in F#
+// Listing 9.4 - Returning more-complex arbitrary data pairs in F# - pg 106
 let nameAndAge' = ("Joe", "Bloggs"), 28
 // val nameAndAge' : (string * string) * int
 let name2, age = nameAndAge'  // deconstructing
@@ -72,14 +72,14 @@ let type1 = nameAndAge'.GetType()
 
 /// 9.3.3 Wildcards
 
-// Listing 9.5 - Using wildcards with tuples
+// Listing 9.5 - Using wildcards with tuples  - pg 107
 let nameAndAge3 = "Jane", "Smith", 25
 let forename3, surname3, _ = nameAndAge3  // ignore 3rd element
 
 
 /// 9.3.4 Type inference with tuples
 
-// Listing 9.6 - Type inference with tuples in F#
+// Listing 9.6 - Type inference with tuples in F#  - pg 107
 let explicit : int * int = 10, 5 
 let implicit = 10, 5
 let _, _ = implicit  // ignore all elements
@@ -91,7 +91,7 @@ let addNumbers arguments =
 let ints1 = addNumbers explicit
 ints1 = 15
 
-// Listing 9.7 - Genericized functions with tuples
+// Listing 9.7 - Genericized functions with tuples  - pg 107
 let addNumbers' arguemnts =   // int * int * 'a * 'b -> int
     let a, b, c, _ = arguemnts  // deconstruct a four-part tuple
     a + b
@@ -120,7 +120,7 @@ A- All?
 
 /// 9.4.1 Tuples and the BCL
 
-// Listing 9.8 - Implicit mapping of 'out' parameters to tuples
+// Listing 9.8 - Implicit mapping of 'out' parameters to tuples - pg 109
 
 // var number = "123";
 // var result = 0;
@@ -128,11 +128,12 @@ A- All?
 let number = "123"
 let result, parsed = System.Int32.TryParse(number)
 
+
 /// 9.4.3 When not to use tuples
 // Tuples don't really have semantic meaning.
 // Too many elements are hard to fallow
 
-(* Quick check 9.3
+(* Quick check 9.3  - pg 110
 1 What’s generally considered the maximum size you should use for a tuple?
 A- maybe 3?  more is hard to follow
 
@@ -141,7 +142,12 @@ A- Causious of the use of the tuple
 *)
 
 
-/// Try this
+(*  Try this  - pg 110
+Look at methods in common BCL namespaces, and try to find some that you think
+should be “tupled.” (Hint: Ones with out parameters are a good start!) Then, write a
+function to load a filename and last-modified date from the filesystem, using a tuple as
+the return type.
+*)
 let dir = System.IO.Directory.GetCurrentDirectory()
 // dir = "C:\Users\emaphis\AppData\Local\Temp"
 

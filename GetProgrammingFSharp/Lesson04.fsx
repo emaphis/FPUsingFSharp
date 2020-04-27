@@ -1,15 +1,15 @@
-/// Lesson 4 - saying a little, doing a lot
+/// Lesson 4 - saying a little, doing a lot  - pg 47
 
-/// 4.2 Binding values in F#
+/// 4.1 Binding values in F#
 
-// Listing 4.1 - Sample let bindings
+// Listing 4.1 - Sample let bindings  - 49
 let age = 35
 let website = System.Uri "https://fsharp.org"
 let add(first, second) = first + second
 
 
 (* Now you try.  pg 50
-You’ll now experiment with binding values to symbols:
+Youï¿½ll now experiment with binding values to symbols:
 1 Create a new F# script file.
 2 Bind some values to symbols yourself:
   a A simple type (for example, string or int).
@@ -28,7 +28,7 @@ let int5 = fn4 100  // call fn4
 
 /// 4.4.1 `let` isn't var!
 
-// Listing 4.2 - Using let bindings
+// Listing 4.2 - Using let bindings  - 50
 let foo() =
     let x = 10       // bind
     printfn "%d" (x + 20)   // use binding
@@ -38,13 +38,14 @@ let foo() =
 
 foo()
 
-/// Quick check 4.1
+
+/// Quick check 4.1   - pg 51
 
 // 1 Give at least two examples of values that can be bound to symbols with let.let x = 10
 let x = 10
 let y = fun a b -> a + b
 
-// 2 What’s the difference between let and var?
+// 2 What's the difference between let and var?
 // let declares an alias for a value, var declares a reference to
 // a memory location that can store values
 
@@ -54,8 +55,9 @@ let y = fun a b -> a + b
 
 /// 4.2 Scoping values
 
-// Listing 4.4 - Scoping in F#
+// Listing 4.4 - Scoping in F# - pg 52
 open System
+
 let doStuffWithTwoNumbers(first, second) =
     let added = first + second
     Console.WriteLine("{0} + {1} = {2}", first, second, added)
@@ -67,17 +69,16 @@ ans1
 
 
 /// 4.2.1 Nested scopes
-
 // Unmanaged scope
 
-// Listing 4.5 - Unmanaged scope
+// Listing 4.5 - Unmanaged scope  - 53
 let year = DateTime.Now.Year
 let age2 = year - 1979
 let estimatedAge' = sprintf "You are about %d years old" age2
 
 estimatedAge'
 
-// Listing 4.6 - Tightly bound scope
+// Listing 4.6 - Tightly bound scope - 54
 let estimatedAge'' =                      // top level scope
     let age =                           // nested scope
         let year = DateTime.Now.Year    // visible only in nested scope
@@ -91,7 +92,7 @@ estimatedAge''
 
 // functions as values
 
-// Listing 4.7 - Nested (inner) functions
+// Listing 4.7 - Nested (inner) functions  - pg 54
 let estimatedAges(familyName, year1, year2, year3) =
     let calculatedAge yearOfBirth =
         let year = System.DateTime.Now.Year
@@ -110,17 +111,18 @@ let estimatedAges(familyName, year1, year2, year3) =
 // Private fields                       - Local values
 // Private methods                      - Local functions
 
-/// Now you try - pg 55
+
+/// Now you try - pg 55, 56
 // See. lesson4Try.  Listing 4.8
 
 
-/// Listing 4.9 -  Refactoring to functions - before
+/// Listing 4.9 -  Refactoring to functions - before - pg 56
 let r = System.Random()
 let nextValue = r.Next(1, 6)
 let answer = nextValue + 10
 answer
 
-/// Listing 4.10 Refactoring to functions—after
+/// Listing 4.10 Refactoring to functions -- after  - pg 57
 let generateRandomNumber max =  // function declaration added
     let r = System.Random()     // code indented 
     let nextValue = r.Next(1, max)  // values replaced parameters

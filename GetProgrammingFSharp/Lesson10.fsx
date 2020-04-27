@@ -1,11 +1,11 @@
-﻿//// Lesson 10 - Shaping data with Records
+﻿//// Lesson 10 - Shaping data with Records - pg 111
 
 
 /// 10.1 POCOs done right: records in F#
 
 /// 10.1.1 Record basics
 
-// Listing 10.4 - Immutable and structural equality record in F#
+// Listing 10.4 - Immutable and structural equality record in F# - pg 114
 type Address =
     { Street : string
       Town : string
@@ -14,7 +14,7 @@ type Address =
 
 /// 10.1.2 Creating records
 
-// Listing 10.5 - Constructing a nested record in F#
+// Listing 10.5 - Constructing a nested record in F#  - pg 115
 type Customer =   // Declaring the Customr record type
     { Forename : string
       Surname : string
@@ -62,7 +62,7 @@ let toyota =
      Colour = "Sandalwood" }
 
 
-(* Quick check 10.1
+(* Quick check 10.1  - pg 117
 1 What is the default accessibility modifier for fields on records?
 A- public
 
@@ -76,7 +76,7 @@ A- Referential equality is equality of address location
 
 /// 10.2.1 Type inference with records
 
-/// Listing 10.6 - Providing explicit types for constructing records
+/// Listing 10.6 - Providing explicit types for constructing records - pg 118
 let address : Address =  // Explicity declaring the type of the value
     { Street = "The Street"
       Town = "The Town"
@@ -90,8 +90,7 @@ let addressExplicit =
 
 /// 10.2.2 Working with immutable records
 
-// Listing 10.7 - Copy-and-update record syntax
-
+// Listing 10.7 - Copy-and-update record syntax - pg 119
 // update age based on email address
 let updatedCustomer =
      { customer with 
@@ -107,7 +106,7 @@ let newCust = updateAge(customer, 32)
 
 /// 10.2.3 Equality checking
 
-// Listing 10.8 - Comparing two records in F#
+// Listing 10.8 - Comparing two records in F#  - pg 120
 let isSameAddress = (address = addressExplicit)  // compare records using = operator
 isSameAddress = true
 
@@ -170,7 +169,7 @@ let updateCustomerAge2(customer, newAge) =
 let newCust2 = updateCustomerAge2(customer, 31)
 
 
-(* Quick check 10.2
+(* Quick check 10.2  - pg 121
 1 At runtime, what do records compile into?
 A- .Net Classes
 
@@ -180,15 +179,14 @@ A- Structural
 
 /// 10.3 Tips and tricks with records
 /// 10.3.1 Refactoring
-// TODO:
 
 /// 10.3.2 Shadowing
 
-do
+do  // pg 112S 
     let myHome = { Street = "The Street"; Town = "The Town"; City = "The City" }
     let myHome = { myHome with City = "The Other City" }
     let myHome = { myHome with City = "The Third City" }
-    myHome
+    myHome |> ignore
     ()
 
 // State decomplected from Identity
@@ -197,7 +195,7 @@ do
 /// 10.3.3 When to use records
 
 
-(* Quick check 10.3
+(* Quick check 10.3  - pg 123
 1 What is shadowing?
 A- Reusing a reference for a new (updated) value
 
@@ -213,5 +211,26 @@ records in F#. Are there any cases that don’t map well?
 
 // 1
 type Car2 = { petrol : int }
+
+/// Gets the distance to a given destination 
+let getDistance (destination) =
+    if destination = "Gas" then 10
+    elif destination = "Home"  then 25
+    elif destination = "Stadium" then 25
+    elif destination = "Office" then 50
+    else failwith "Unknown destination!"
+
+//assume that one unit of distance needs one unit of petrol
+let calculateRemainingPetrol(car: Car2, distance: int) : int =
+    if car.petrol >= distance then car.petrol - distance
+    else failwith "Oops! You’ve run out of petrol!"
+
+/// Drives to a given destination given a starting amount of petrol
+let driveTo (car, destination) =
+    let distance = getDistance(destination)
+    let remain = calculateRemainingPetrol(car, distance)
+    if destination = "Gas" then remain + 50
+    else remain
+
 
 // 2 - TODO:

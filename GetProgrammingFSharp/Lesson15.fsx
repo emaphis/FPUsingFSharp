@@ -1,8 +1,8 @@
-﻿//// Lesson 15 - Working with collection in F#
+﻿//// Lesson 15 - Working with collection in F#  - pg 173
 
 /// 15.1 F# collection basics
 
-/// Listing 15.1 A sample dataset of football results
+/// Listing 15.1 A sample dataset of football results - pg 174
 type FootballResult =
     { HomeTeam : string
       AwayTeam : string
@@ -33,9 +33,10 @@ let results =
 
 /// 15.1.1 In-place collection modifications
 
-/// Listing 15.2 An imperative solution to a calculation over data
-// Evaluate generic datatype 'summary' with the code that uses it so
-// the compiler can calculate it's datattype.....
+/// Listing 15.2 An imperative solution to a calculation over data - pg 175
+
+/// Evaluate generic datatype 'summary' with the code that uses it so
+/// the compiler can calculate it's datattype.....
 open System.Collections.Generic
 
 type TeamSummary = { Name : string; mutable AwayWins : int }
@@ -72,7 +73,7 @@ for teamSummary in summary do
 
 /// 15.1.3 Transformation pipelines
 
-/// Listing 15.4 A declarative solution to a calculation over data
+/// Listing 15.4 A declarative solution to a calculation over data - pg 178
 
 /// What us away win
 let isAwayWin result = result.AwayGoals > result.HomeGoals
@@ -102,7 +103,7 @@ Let's see how to work through the pipeline that you’ve just created, as per fi
 
 /// 15.1.5 Compose, compose, compose
 
-(* Quick check 15.1
+(* Quick check 15.1  - pg 181
 1 What are the three main collection modules in F#?
 A- List, Array, Seq.
 2 Why is the input collection the last argument to collection functions?
@@ -122,7 +123,7 @@ A- Complex to reason ablut,
 
 /// 15.2.2 Using .NET arrays
 
-/// Listing 15.5 - Working with .NET arrays in F#
+/// Listing 15.5 - Working with .NET arrays in F#  - pg 182
 let numbersArray = [| 1; 2; 3; 4; 6 |]  // standard BCL array
 let firstNumber = numbersArray.[0]
 let firstThreeNumbers = numbersArray.[0 .. 2]
@@ -132,7 +133,7 @@ numbersArray.[0] = 99
 
 /// 15.2.3 Immutable lists
 
-/// Listing 15.6 Working with F# lists
+/// Listing 15.6 - Working with F# lists - pg 183
 let numbers = [ 1; 2; 3; 4; 5; 6 ]  // int list
 let numbersQuick = [ 1 .. 6 ]
 let head::tail = numbers
@@ -142,7 +143,7 @@ let evenMoreNumbers = moreNumbers @ [ 7 .. 9 ]
 
 /// 15.2.4 Comparing and contrasting collections
 
-(* Quick check 15.2
+(* Quick check 15.2  - pg 185
 1 How does seq relate to IEnumerable<T>?
 A- seq functions operate on IEnumerable<T>
 

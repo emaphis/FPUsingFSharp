@@ -1,26 +1,26 @@
-/// Lesson 18 - Folding your way to success
+/// Lesson 18 - Folding your way to success  - pg 206
 
 /// 18.1 Understanding aggregations and accumulators
 /// Sum, Average, Min, Max, Count
 
-/// Listing 18.1 - Example aggregation signatures
+/// Listing 18.1 - Example aggregation signatures   - pg 207
 type Sum = int seq -> int
 type Average = float seq -> float
 type Count<'T> = 'T seq -> int
 
 /// 18.1.1 Creating your first aggregation function
-/// collection, accumulator, initial value
-/// Listing 18.2 - Imperative implementation of sum
+/// parameters: collection, accumulator, initial value
+/// Listing 18.2 - Imperative implementation of sum  - pg 208
 let sum' inputs =
     let mutable accumulator = 0
     for input in inputs do
         accumulator <- accumulator + input
     accumulator
 
-sum' [ 1; 2; 3; 4; 5 ]
+sum' [ 1; 2; 3; 4; 5 ]  = 15
 
 
-(* Now you try - pg 208
+(* Now you try - pg 209
 Try to create aggregation functions by using the preceding style for a couple of other
   aggregation functions:
 1 Create a new .fsx script.
@@ -30,14 +30,13 @@ Try to create aggregation functions by using the preceding style for a couple of
   updates the accumulator.
 4 Now do the same to calculate the maximum value of a list.
 *) 
-// 2.
+// 2, 3
 let length inputs =
     let mutable accumulator = 0
     for _ in inputs do
         accumulator <- accumulator + 1
     accumulator
 
-// 3.
 length [] = 0
 length [1] = 1
 length [1; 2; 3] = 3
@@ -53,7 +52,8 @@ let maxList inputs =
 maxList [ 3 ] = 3
 maxList [ 1; 9; 3; 100; 4 ] = 100
 
-(* Quick check 18.1
+
+(* Quick check 18.1 -  209
 1 What is the general signature of an aggregation?
 A-  seq<'a> -> 'b
 2 What are the main components of any aggregation?
@@ -63,7 +63,8 @@ A- collection, accumulator, initial value
 
 /// 18.2 Saying hello to fold
 // folder:( 'State -> 'T -> 'State) -> state:'State -> source:seq<'T> -> 'State
-/// Listing 18.3 - Implementing sum through fold
+
+/// Listing 18.3 - Implementing sum through fold - pg 210
 let sum inputs =
     Seq.fold
         (fun state input -> state + input)
@@ -73,8 +74,8 @@ let sum inputs =
 sum [ 1; 2; 3; 4; 5 ] = 15
 
 
-/// Listing 18.4 Looking at fold with logging
-let sum'' inputs =
+/// Listing 18.4 Looking at fold with logging  - pg 210
+let sumLog inputs =
     Seq.fold
         (fun state input ->
             let newState = state + input
@@ -85,7 +86,8 @@ let sum'' inputs =
         0
         inputs
 
-sum'' [ 1 .. 5 ] = 15
+sumLog [ 1 .. 5 ] = 15
+
 
 (* Now you try - pg 211
 Next you’ll create a few aggregations of your own to improve your familiarity with fold:
@@ -114,7 +116,7 @@ max' [ 1; 9; 3; 100; 4 ] = 100
 
 
 /// 18.2.1 Making fold more readable
-
+///  Listing 18.5 - Making fold read in a more logical way - pg 212
 let sum1 inputs = 
     Seq.fold (fun state input -> state + input) 0 inputs
 
@@ -135,7 +137,7 @@ let sum3 inputs =
 
 
 /// 18.2.3 - Folding instead of while loops
-/// Listing - 18.6 Accumulating through a while loop
+/// Listing - 18.6 Accumulating through a while loop - pg 213
 
 open System.IO
 let mutable totalChars = 0
@@ -147,7 +149,7 @@ while (not sr.EndOfStream) do
 //totalChars
 
 
-/// Listing 18.7 - Simulating a collection through sequence expressions
+/// Listing 18.7 - Simulating a collection through sequence expressions - pg 213
 /// using 'yield' to simulate a collection
 
 open System.IO
@@ -155,12 +157,12 @@ let lines : string seq =
     seq {
         use sr = new StreamReader(File.OpenRead @"C:\bin\book.txt")
         while (not sr.EndOfStream) do
-            yield sr.ReadLine() } ;;
+            yield sr.ReadLine() }  // yield a row from StreamReader
 
 let len = (0, lines) ||> Seq.fold(fun total line -> total + line.Length)
 
 
-(* Quick check 18.2
+(* Quick check 18.2  - pg 214
 1 What’s the difference between reduce and fold?
 A- Reduce uses the first value of the sequence as the starting state value
 
@@ -171,7 +173,7 @@ A- seq, yield
 
 /// 18.3 Composing functions with fold
 /// a rule based parser
-/// Listing 18.8 - Creating a list of rules
+/// Listing 18.8 - Creating a list of rules  - pg 215
 
 open System
 type Rule = string -> bool * string
@@ -185,7 +187,7 @@ let rules : Rule list =
 
 
 /// 18.3.1 - Composing rules manually
-/// - Listing 18.9 - Manually building a super rule
+/// - Listing 18.9 - Manually building a super rule - pg 215
 /// concatinate rules ...
 let validateManual (rules: Rule list) word =
     let passed, error = rules.[0] word     // testing the first rule
@@ -201,6 +203,7 @@ let validateManual (rules: Rule list) word =
 let validateM = validateManual rules
 
 /// 18.3.2 Folding functions together
+/// Listing 18.10 - Composing a list of rules by using reduce - pg 216
 let buildValidator (rules : Rule list) =
     rules
     |> List.reduce(fun firstRule secondRule ->
@@ -265,7 +268,7 @@ validate1 words3
 let word4 = "HELLO FROM F8"
 validate1 word4
 
-(* Quick check 18.3
+(* Quick check 18.3 - pg 217
 1 What OO pattern is equivalent to reducing functions together?
 A- Composite pattern
 

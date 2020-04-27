@@ -19,7 +19,7 @@ age to a variety of output streams, such as the console or the filesystem:
   of Console.WriteLine.
 *)
 
-/// Listing 13.6 - Injecting dependencies into functions
+/// Listing 13.6 - Injecting dependencies into functions - pg 136
 
 open System
 
@@ -32,7 +32,7 @@ let printCustmerAge writer customer =
     elif customer.Age < 20 then writer "Teenager!"
     else writer "Adult!"
 
-/// Listing 13.7 Partially applying a function with dependencies
+/// Listing 13.7 Partially applying a function with dependencies -158
 
 let cust = { Age = 25 }
 
@@ -42,12 +42,13 @@ printCustmerAge (fun str -> str.Length) cust
 printCustmerAge Console.WriteLine { Age = 23 }
 
 let printToConsole = printCustmerAge Console.WriteLine
+
 printToConsole { Age = 21 }
 printToConsole { Age = 12 }
 printToConsole { Age = 18 }
 
 
-/// Listing 13.8 Creating a dependency to write to a file
+/// Listing 13.8 Creating a dependency to write to a file  - pg 158
 open System.IO
 
 let path = @"C:\bin\output.txt"
@@ -58,9 +59,3 @@ printToFile { Age = 21 }
 
 let text = File.ReadAllText(path)
 text = "Adult!"
-
-(* Quick check 13.3
-What’s the key difference between passing dependencies in F# and C#?
-A- F# pases fuctions of the right signature
-   C# passed classes implementing interfaces.
-*)

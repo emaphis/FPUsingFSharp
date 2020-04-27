@@ -1,10 +1,10 @@
-﻿//// Lesson 17 - Maps, dictionary, sets
+﻿//// Lesson 17 - Maps, dictionary, sets  - pg 197
 
 /// 17.1 Dictionaries
 
 /// 17.1.1 Mutable dictionaries in F#
 
-/// Listing 17.1 - Standard dictionary functionality in F#
+/// Listing 17.1 - Standard dictionary functionality in F#  - pg 198
 open System.Collections.Generic
 
 let inventory = Dictionary<string, float>()
@@ -18,7 +18,7 @@ let bananas = inventory.["Bananas"]
 let oranges = inventory.["Oranges"]  // exception
 
 
-/// Listing 17.2 - Generic type inference with Dictionary
+/// Listing 17.2 - Generic type inference with Dictionary  - pg 198
 let inventory2 = Dictionary<_,_>()  // explicit placeholder for generic type arguments
 inventory2.Add("Apples", 0.33)
 
@@ -29,7 +29,7 @@ inventory3.Add("Apples", 0.33)
 /// 17.1.2 Immutable dictionaries
 // Immutable C# dictinary
 
-/// Listing 17.3 Creating an immutable IDictionary
+/// Listing 17.3 Creating an immutable IDictionary  - pg 199
 let inventory4 : IDictionary<string, float> =
     ["Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
     |> dict  // create the dictionary
@@ -43,7 +43,7 @@ inventory4.Add("Pinaapples", 0.85)
 inventory4.Remove("Baanas")
 
 
-(* Quick check 17.1
+(* Quick check 17.1  - pg 199
 1 What sort of situations would you use a dictionary for?
 A- When look up needs to be fast, and item order isn't relevant.
 
@@ -58,7 +58,7 @@ A- for immuatable dictionaries - final truth
 /// 17.2 The F# Map
 // immutable key value lookup
 
-/// Listing 17.4 - Using the F# Map lookup
+/// Listing 17.4 - Using the F# Map lookup  - pg 200
 let inventory5 =
     [ "Apples", 0.33; "Oranges", 0.23; "Bannana", 0.45 ]
     |> Map.ofList  // list to map
@@ -74,9 +74,9 @@ let newInventory5 =
 
 
 /// 17.2.1 Useful Map functions
-// List, Array, Seq - map filter iter partition
+// List, Array, Seq - map, filter, iter, partition
 
-/// Listing 17.5 - Using the F# Map module functions
+/// Listing 17.5 - Using the F# Map module functions  - pg 201
 let cheapFruit, expensiveFruit =
     inventory5
     |> Map.partition(fun fuit cost -> cost < 0.3)
@@ -102,8 +102,8 @@ open System.IO
 
 let rootDirs =
     let now = DateTime.UtcNow;
-    Directory.EnumerateDirectories(@"c:\")                // 2.
-    |> Seq.map (fun path -> DirectoryInfo path)           // 3.
+    Directory.EnumerateDirectories(@"c:\")                   // 2.
+    |> Seq.map (fun path -> DirectoryInfo path)              // 3.
     |> Seq.map (fun dir -> (dir.Name, dir.CreationTimeUtc))  // 4.
     |> Map.ofSeq                                             // 5.
     |> Map.map (fun key time -> (now - time).Days)           // 6.
@@ -112,7 +112,7 @@ for dir in rootDirs do
     Console.WriteLine(dir)
 
 
-(* Quick check 17.2
+(* Quick check 17.2  - pg 202
 1 What’s the main difference between Dictionary and Map?
 A- Map is immutable, Dictionary is mutable
 
@@ -123,18 +123,19 @@ A- Dictionary has better performance, has better interoperability
 
 /// 17.3 Sets
 
-/// Listing 17.6 - Creating a set from a sequence
+/// Listing 17.6 - Creating a set from a sequence  - pg 203
 let myBasket = [ "Apples"; "Apples"; "Apples"; "Bananas"; "Pineapples"  ]
 let fruitsILike = myBasket |> Set.ofList
 
-/// Listing 17.7 - Comparing List- and Set-based operationsS
+/// Listing 17.7 - Comparing List- and Set-based operations  - pg 203
 let yourBasket = [ "Kiwi"; "Bananas"; "Grapes" ]
 let allFruitsList = (myBasket @ yourBasket) |> List.distinct
 
 let fruitsYouLike = yourBasket |> Set.ofList
 let allFruits = fruitsILike + fruitsYouLike
 
-/// Listing 17.8 - Sample Set-based operations
+
+/// Listing 17.8 - Sample Set-based operations - pg 204
 
 // gets fruits in A that are not in B
 let fruitsJustForMe = allFruits - fruitsYouLike
@@ -146,10 +147,14 @@ let fruitsWeCanShare = fruitsILike |> Set.intersect fruitsYouLike
 let doILikeAllYOurFruis = fruitsILike |> Set.isSubset fruitsYouLike
 
 
-(* Quick check 17.3 
+(* Quick check 17.3   - pg 204
 What function might you use to simulate simple set-style behavior in a list?
 A- Distinct , DistinctBy
 *)
 
-/// Try this - pg 205
-// TODO:
+(* Try this - pg 205
+// TODO: See Lesson 16 pg 205
+Continuing from the previous lesson, create a lookup for all files within a folder so that
+you can find the details of any file that has been read. Experiment with sets by identifying
+file types in folders. What file types are shared between two arbitrary folders?
+*)
