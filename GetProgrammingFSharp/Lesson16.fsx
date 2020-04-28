@@ -202,18 +202,28 @@ open System.IO
 
 let path = @"C:\Testing\"
 
+/// Represents a directory and a list of files that belong to that directory
+/// - created by the groupBy function
 type DirInfo = string * FileInfo list
 
-let getFileList dir = Directory.GetFiles(dir) |> Array.toList
+/// get list names of subdirectories of passed dir
+let getSubDirectories path =
+    Directory.GetDirectories path
+    |> Array.toList
+
+/// given a dir get a list of fileInfo in directory
+let getFileList dir =
+    Directory.GetFiles(dir)
+    |> Array.map (fun file -> FileInfo(file))
+    |> Array.toList
 
 /// get a list of files on a given path
 /// list of files should be grouped by dir
-let getSubDirs (dir : string) : DirInfo list = 
-    Directory.GetDirectories(path)  |> Array.toList
-    |> List.map (fun dir -> DirectoryInfo(dir).FullName) // get subdirectories of dir
-    |> List.collect getFileList           // get list of files in directories
-    |> List.map (fun file -> FileInfo(file))
+let getSubDirs (path : string) : DirInfo list =
+    getSubDirectories path          // get subdirectories of dir
+    |> List.collect getFileList     // get list of files in directories
     |> List.groupBy (fun file -> file.DirectoryName)
+
 
 let getFileSizes (subdir : DirInfo) =
     let dir, filelist = subdir
@@ -230,13 +240,12 @@ let getDirSizes dirPath =
 getDirSizes path
 
 ///////////////////////////////////////////////////////////
-type DirRecord = { 
-    Name: string
-    Size: int
-    NumFiles: int
-    AvgSize: float
-    Extensions: string list
-}
+type DirRecord =
+    { Name: string
+      Size: int
+      NumFiles: int
+      AvgSize: float
+      Extensions: string list }
 
 let createDirRecord (dirInfo : DirInfo) =
     let path, files = dirInfo
