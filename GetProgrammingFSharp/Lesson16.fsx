@@ -191,7 +191,6 @@ A-  Performance or resource reasons.
 *)
 
 (* Try this - pg 196
-// TODO: not finished
 Write a simple script that, given a folder path on the local filesystem, will return the
 name and size of each subfolder within it. Use groupBy to group files by folder, before
 using an aggregation function such as sumBy to total the size of files in each folder. Then,
@@ -200,15 +199,57 @@ contains the folder name, size, number of files, average file size, and the dist
 file extensions within the folder.
 *)
 open System.IO
-let path = @"C:\src\dotnet\"
+
+let path = @"C:\Testing\"
+
+type DirInfo = string * FileInfo list
+
+let getFileList dir = Directory.GetFiles(dir) |> Array.toList
 
 /// get a list of files on a given path
-/// list of files should be grouped by 
+/// list of files should be grouped by dir
+let getSubDirs (dir : string) : DirInfo list = 
+    Directory.GetDirectories(path)  |> Array.toList
+    |> List.map (fun dir -> DirectoryInfo(dir).FullName) // get subdirectories of dir
+    |> List.collect getFileList           // get list of files in directories
+    |> List.map (fun file -> FileInfo(file))
+    |> List.groupBy (fun file -> file.DirectoryName)
 
-let files = 
-    Directory.GetDirectories(path)
-    |> Seq.toList
-    |> List.map (fun dir -> (Directory.GetCurrentDirectory(), Directory.GetFiles(dir)))
-    |> List.map (fun dir -> (fst dir, Seq.toList(snd dir)))
+let getFileSizes (subdir : DirInfo) =
+    let dir, filelist = subdir
+    let dirFileSizes =
+        filelist |> List.map (fun file -> file.Length)
+                 |> List.reduce (+)
+    (dir, dirFileSizes)
 
-Directory.EnumerateDirectories(path)
+let getDirSizes dirPath =
+  let subdirs = getSubDirs dirPath
+  let dirSizes = subdirs |> List.map (fun  dir -> (getFileSizes dir))
+  dirSizes |> List.sortBy (fun (dir, size) -> size) |> List.rev
+
+getDirSizes path
+
+///////////////////////////////////////////////////////////
+type DirRecord = { 
+    Name: string
+    Size: int
+    NumFiles: int
+    AvgSize: float
+    Extensions: string list
+}
+
+let createDirRecord (dirInfo : DirInfo) =
+    let path, files = dirInfo
+    { Name = path; 
+      Size = files |> List.sumBy (fun file -> int(file.Length))
+      NumFiles = files.Length
+      AvgSize = (files |> List.sumBy (fun file -> float(file.Length))) / float(files.Length)
+      Extensions = files |> List.map (fun file -> file.Extension) |> List.distinct
+    }
+
+let getDirInfo dirPath =
+    let subdirs = getSubDirs dirPath
+    subdirs |> List.map (fun dirInfo -> createDirRecord dirInfo)
+            |> List.sortByDescending (fun dir -> dir.Size)
+
+getDirInfo path
