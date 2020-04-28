@@ -226,9 +226,27 @@ let getSubDirs (path : string) : DirInfo list =
 
 /// DirInfo functions
 
+let getDirName (dirInfo : DirInfo) =
+    let path, _ = dirInfo
+    path
+
 let getFileSizes (subdir : DirInfo) =
     let path, files = subdir
-    files |>List.sumBy (fun file -> int(file.Length))
+    files |> List.sumBy (fun file -> int(file.Length))
+
+let getNumberFiles (dirInfo : DirInfo) =
+    let _, files = dirInfo
+    files.Length
+
+let getAverageFileSize (dirInfo : DirInfo) =
+    let sizeFiles = float(getFileSizes dirInfo)
+    let numFiles = float(getNumberFiles dirInfo)
+    sizeFiles / numFiles
+
+let getFileExtensions (dirInfo : DirInfo) =
+    let _, files = dirInfo
+    files |> List.map (fun file -> file.Extension)
+          |> List.distinct
 
 
 let getDirSizes dirPath =
@@ -246,18 +264,12 @@ type DirRecord =
       AvgSize: float
       Extensions: string list }
 
-let getDirName (dirInfo : DirInfo) =
-    let path, _ = dirInfo
-    path
-
 let createDirRecord (dirInfo : DirInfo) =
-    let path, files = dirInfo
     { Name = getDirName dirInfo
       Size = getFileSizes dirInfo
-      NumFiles = files.Length
-      AvgSize = (files |> List.sumBy (fun file -> float(file.Length))) / float(files.Length)
-      Extensions = files |> List.map (fun file -> file.Extension) |> List.distinct
-    }
+      NumFiles = getNumberFiles dirInfo
+      AvgSize = getAverageFileSize dirInfo
+      Extensions = getFileExtensions dirInfo }
 
 let getDirInfo dirPath =
     let subdirs = getSubDirs dirPath
