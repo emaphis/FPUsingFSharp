@@ -181,7 +181,7 @@ let getFileList dir =
 
 /// get a list of files on a given path
 /// list of files should be grouped by dir
-let getSubDirs (path : string) : DirInfo list =
+let getDirFileList (path : string) : DirInfo list =
     getSubDirectories path          // get subdirectories of dir
     |> List.collect getFileList     // get list of files in directories
     |> List.groupBy (fun file -> file.DirectoryName)
@@ -205,18 +205,24 @@ let getAverageFileSize (dirInfo : DirInfo) =
     let numFiles = float(getNumberFiles dirInfo)
     sizeFiles / numFiles
 
-let getFileExtensions (dirInfo : DirInfo) =
+
+// NOTE: Lession 17 - Change to Set instead of distinct
+let getFileExtensions (dirInfo : DirInfo) : Set<string> =
     let _, files = dirInfo
     files |> List.map (fun file -> file.Extension)
-          |> List.distinct
+          |> Set.ofList
 
 
+//////////////////////////////////////////////////////////////
+
+/// get a sorted list of directories sorted by total size of iles
 let getDirSizes dirPath =
-  let subdirs = getSubDirs dirPath
+  let subdirs = getDirFileList dirPath
   subdirs |> List.map (fun dirInfo -> (fst dirInfo, dirInfo |> getFileSizes))
           |> List.sortByDescending (fun (dir, size) -> size)
 
-getDirSizes path
+//getDirSizes path
+
 
 ///////////////////////////////////////////////////////////
 type DirRecord =
@@ -224,7 +230,7 @@ type DirRecord =
       Size: int
       NumFiles: int
       AvgSize: float
-      Extensions: string list }
+      Extensions: Set<string> }   // NOTE: Lession 17 - Change to Set instead of distinct
 
 let createDirRecord (dirInfo : DirInfo) =
     { Name = getDirName dirInfo
@@ -233,9 +239,40 @@ let createDirRecord (dirInfo : DirInfo) =
       AvgSize = getAverageFileSize dirInfo
       Extensions = getFileExtensions dirInfo }
 
-let getDirInfo dirPath =
-    let subdirs = getSubDirs dirPath
+let getDirInfoList dirPath =
+    let subdirs = getDirFileList dirPath
     subdirs |> List.map (fun dirInfo -> createDirRecord dirInfo)
             |> List.sortByDescending (fun dir -> dir.Size)
 
-getDirInfo path
+//getDirInfoList path
+
+
+///////////////////////////////////////
+/// map and set functionality
+
+// Maps.
+
+/// A Map from directory names to FileInfo lists
+type DirMap = Map<string,FileInfo list>
+
+/// Create a Directory Map given a path
+let getDirectoryMap path : DirMap = 
+    let fileList = getDirFileList path
+    fileList |> Map.ofList
+
+
+// Example directory map
+let dirMap = getDirectoryMap path |> ignore
+
+// Example lookup function
+let findFileName (dirMap : DirMap) path =
+    let fileList = dirMap.TryFind path
+    fileList.Value
+    |> List.map (fun fileInfo -> fileInfo.Name)
+
+//findFileName dirMap "C:\Testing\subdir3"
+
+dir
+// Sets.
+
+
