@@ -1,17 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <RootNamespace>lesson_19_capstone_3</RootNamespace>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>lesson_19_capstone_3</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="Domain.fs" />
     <Compile Include="Operations.fs" />
     <Compile Include="Auditing.fs" />
     <None Include="Lesson19.fsx" />
+    <None Include="Testing.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
 </Project>

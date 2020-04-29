@@ -28,3 +28,31 @@ let auditAs operationName audit operation amount account =
     else audit account (sprintf "%O: Transaction accepted! Balance is noe $%M" DateTime.UtcNow updatedAccount.Balance)
 
     updatedAccount
+
+
+
+/// Functions for command-processing pipeline - pg 222,223
+
+/// Checks whether the command is one of (d)eposit, (w)ithdraw, ore(x)it.
+let isValidCommand (command : char) =
+    command = 'd' || command = 'w' || command = 'x'
+
+/// Checks whether the command is the exit command.
+let isStopCommand command = (command = 'x')
+
+/// Takes in a command and converts it to a tuple of the command and
+/// also an amount.
+let getAmount command =
+    let amount =
+        if command = 'd' then 50M
+        elif command = 'w' then 25M
+        else 0M
+    (command, amount)
+
+/// apply the appropriate action on the account and return the new account back out again.
+/// Signature is compatible it fold.
+let processCommand (account: Account) (command : (char * decimal)) =
+     let comd, amount = command
+     if comd = 'd' then deposit amount account
+     elif comd = 'w' then withdraw amount account
+     else account

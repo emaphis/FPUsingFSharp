@@ -8,6 +8,8 @@ open Capstone3.Operations
 
 [<EntryPoint>]
 let main argv =
+   // let accountList = List<Account>
+
     let mutable account =
            let customer =
                Console.Write "Enter customer name: "
