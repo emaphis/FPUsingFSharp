@@ -154,7 +154,7 @@ A- Distinct , DistinctBy
 
 
 (* Try this - pg 205
-// TODO: See Lesson 16 pg 205
+See Lesson 16 pg 193
 Continuing from the previous lesson, create a lookup for all files within a folder so that
 you can find the details of any file that has been read. Experiment with sets by identifying
 file types in folders. What file types are shared between two arbitrary folders?
@@ -185,6 +185,7 @@ let getDirFileList (path : string) : DirInfo list =
     getSubDirectories path          // get subdirectories of dir
     |> List.collect getFileList     // get list of files in directories
     |> List.groupBy (fun file -> file.DirectoryName)
+
 
 /// DirInfo functions
 
@@ -252,27 +253,46 @@ let getDirInfoList dirPath =
 
 // Maps.
 
-/// A Map from directory names to FileInfo lists
-type DirMap = Map<string,FileInfo list>
+/// A Map from directory names to FileInfo lists\
+type DirInfoMap = Map<string, FileInfo list>
 
 /// Create a Directory Map given a path
-let getDirectoryMap path : DirMap = 
-    let fileList = getDirFileList path
-    fileList |> Map.ofList
-
+let getDirFileMap (path : string) : DirInfoMap =
+    getDirFileList path
+    |> Map.ofList
 
 // Example directory map
-let dirMap = getDirectoryMap path |> ignore
+let dirMap = getDirFileMap path
 
 // Example lookup function
-let findFileName (dirMap : DirMap) path =
-    let fileList = dirMap.TryFind path
-    fileList.Value
-    |> List.map (fun fileInfo -> fileInfo.Name)
+let findFileNames (dirMap : DirInfoMap) path =
+    let fileList = (dirMap.TryFind path).Value 
+    fileList |> List.map (fun fileInfo -> fileInfo.Name)
 
-//findFileName dirMap "C:\Testing\subdir3"
+findFileNames dirMap "C:\Testing\subdir3"
 
-dir
+
 // Sets.
+type DirRecMap = Map<string, DirRecord>
 
+/// get a map of files on a given path
+let getDirInfoMap dirPath =
+    let subdirs = getDirFileList dirPath
+    subdirs |> List.map (fun dirInfo -> (fst dirInfo, createDirRecord dirInfo))
+            |> Map.ofList
+;;
 
+let dirRecMap = getDirInfoMap path
+
+let findFileExtensions (dirMap : DirRecMap) path =
+    let dirRecord =  dirMap.TryGetValue path |> snd
+    dirRecord.Extensions
+
+let extenstions1 = findFileExtensions dirRecMap "C:\Testing\subdir1"  // set [".bat"; ".md"; ".txt"]
+let extenstions2 = findFileExtensions dirRecMap "C:\Testing\subdir2"  // set [".md"; ".txt"]
+let extenstions3 = findFileExtensions dirRecMap "C:\Testing\subdir3"  // set [".bat"; ".md"; ".txt"]
+
+// ext in common
+extenstions1 |>Set.intersect extenstions2
+extenstions1 |>Set.intersect extenstions3
+extenstions2 |>Set.intersect extenstions3
