@@ -6,45 +6,69 @@ open Capstone3.Domain
 open Capstone3.Operations
 
 
-[<EntryPoint>]
-let main argv =
-   // let accountList = List<Account>
+let withdrawWithAudit = auditAs "withdraw" Auditing.printTransaction withdraw
+let depositWithAudit = auditAs "deposit" Auditing.printTransaction deposit
 
-    let mutable account =
-           let customer =
-               Console.Write "Enter customer name: "
-               let name = Console.ReadLine()
-               { Name = name }
+/// Checks whether the command is one of (d)eposit, (w)ithdraw, ore(x)it.
+let isValidCommand (command : char) =
+    command = 'd' || command = 'w' || command = 'x'
 
-           Console.Write "Please enter account id: "
-           let accountID = Console.ReadLine()
+/// Checks whether the command is the exit command.
+let isStopCommand command = (command = 'x')
 
-           Console.Write "Enter opening balance: "
-           let balance = Decimal.Parse (Console.ReadLine())
-           { AccountID = accountID
-             Owner = customer
-             Balance = balance }
-
-    let withdrawAudit = withdraw |> auditAs "withdraw"  Auditing.filesystemLog
-    let depositwithAudit = deposit |> auditAs "deposit" Auditing.filesystemLog
-
+let consoleCommands = seq {
     while true do
-        let action =
-            Console.WriteLine()
-            printfn "Current balance is $%M" account.Balance
-            Console.Write "(d)eposit, (w)ithdraw or e(x)it: "
-            Console.ReadLine();
+        Console.Write "(d)eposit, (w)ithdraw or e(x)it: "
+        yield Console.ReadKey().KeyChar
+        Console.WriteLine() }
 
-        if action = "x" then Environment.Exit 0
+/// Takes in a command and converts it to a tuple of the command and
+/// also an amount.
+let getAmountConsole command =
+    let amount : decimal =
+        Console.Write "\nPlease enter amount:"
+        let line = Console.ReadLine()
+        Decimal.Parse(line)
+    Console.WriteLine()
+    (command, amount)
 
-        let amount =
-            Console.Write "Amount: "
-            Decimal.Parse(Console.ReadLine())
+/// apply the appropriate action on the account and return the new account back out again.
+/// Signature is compatible it fold.
+let processCommand (account: Account) (command: char, amount: decimal) =
+    printfn ""
+    let account =
+        if command = 'd' then deposit amount account
+        elif command = 'w' then withdraw amount account
+        else account
+    printfn "Current balance is $%M" account.Balance
+    account
 
-        // Mutate account via an expresson
-        account <-
-            if   action = "d" then depositwithAudit amount account
-            elif action = "w" then withdrawAudit amount account
-            else account
 
-    0 // return an integer exit code
+[<EntryPoint>]
+let main _ =
+    let name =
+        Console.Write "Please enter your name: "
+        Console.ReadLine()
+    
+    let accountID =
+        Console.Write "Please enter account id: "
+        Console.ReadLine()
+
+    let openingAccount = { Owner = { Name = name }; Balance = 0M; AccountID = accountID } 
+    
+    printfn "Current balance is £%M" openingAccount.Balance
+
+    let closingAccount =
+        // Fill in the main loop here...    
+        consoleCommands
+        |> Seq.filter isValidCommand
+        |> Seq.takeWhile (not << isStopCommand)
+        |> Seq.map getAmountConsole
+        |> Seq.fold processCommand openingAccount
+ 
+    Console.Clear()
+    printfn "Closing Balance:\r\n %A" closingAccount
+    Console.ReadKey() |> ignore
+
+    0
+
