@@ -1,23 +1,13 @@
 ﻿module Capstone3.Auditing
 
 open Capstone3.Domain
-open Capstone3.Operations
 open System.IO
 
-/// Log to a file
-let fileSystemAudit account message =
-    let path = sprintf @"c:\bin\%s-%s.txt" account.Owner.Name account.AccountID
-    File.AppendAllText(path, message)
-    
 /// Log to the console
-let consoleAudit account message =
+let consoleLog account message =
     printfn "Account:  %O: %s" account.AccountID message
 
-let auditAs operationName auditFun operation amount account = 
-    auditFun account (sprintf "preforming transaction: %s for amount: %M" operationName amount)
-    let newAcct = operation amount account
-    let isBalanceChanged = (newAcct.Balance.Equals(account.Balance))
-    if isBalanceChanged 
-    then auditFun account "transaction failed - no update"
-    else auditFun newAcct (sprintf "transaction: %s completed - new balance: %M" operationName newAcct.Balance)
-    newAcct
+/// Log to file system
+let filesystemLog account message =
+    let filePath = sprintf @"c:\Testing\%s-%O.txt" account.Owner.Name account.AccountID
+    File.AppendAllLines(filePath, [ message ])
