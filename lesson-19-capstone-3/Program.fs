@@ -26,7 +26,7 @@ let consoleCommands = seq {
 /// also an amount.
 let getAmountConsole command =
     let amount : decimal =
-        Console.Write "\nPlease enter amount:"
+        Console.Write "\nPlease enter amount: "
         let line = Console.ReadLine()
         Decimal.Parse(line)
     Console.WriteLine()
@@ -52,7 +52,7 @@ let main _ =
     
     let openingAccount = { Owner = { Name = name }; Balance = 0M; AccountID = Guid.Empty } 
     
-    printfn "Current balance is £%M" openingAccount.Balance
+    printfn "Current balance is $%M" openingAccount.Balance
 
     let closingAccount =
         // Fill in the main loop here...    
@@ -63,7 +63,7 @@ let main _ =
         |> Seq.fold processCommand openingAccount
  
     //Console.Clear()
-    printfn "Closing Balance:\r\n %A" closingAccount
+    printfn "\nClosing Balance:\r\n %A" closingAccount
     Console.ReadKey() |> ignore
 
     0

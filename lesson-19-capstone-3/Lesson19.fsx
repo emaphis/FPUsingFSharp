@@ -54,3 +54,48 @@ let account1 =
 
 account1
 
+/// 19.4 Rehydrating an account from disk
+/// Now you try - page 226
+
+
+let createTransaction date operation amount accepted =
+    { Timestamp = DateTime.Parse(date)
+      Operation = operation
+      Amount = amount
+      Accepted = accepted }
+
+let testtransactions =
+    [ createTransaction "4/30/2020 2:59:15 PM" "deposit" 50M true
+      createTransaction "4/30/2020 2:59:51 PM" "withdraw" 20M false
+      createTransaction "4/30/2020 2:59:25 PM" "deposit" 100M true
+      createTransaction "4/30/2020 2:59:46 PM" "withdraw" 120M true
+      createTransaction "4/30/2020 2:59:31 PM" "withdraw" 20M true ]
+
+;;
+
+//  fold example
+let addInts acc num = acc + num
+
+let accumInts lst =
+    lst |> List.fold (fun acc num -> addInts acc num) 0
+
+[1; 2; 3; 4] |> accumInts  = 10
+List.fold (fun acc num -> acc + num) 0 [1; 2; 3; 4] = 10
+
+
+let accumulateTransaction account transaction =
+    if transaction.Operation = "deposit"
+        then deposit transaction.Amount account
+    elif transaction.Operation = "withdraw"
+        then withdraw transaction.Amount account
+    else account
+
+;;
+let loadAccount2 (owner, accountID, transactions) =
+    let openingAccount = { AccountID = accountID; Owner = { Name = owner };  Balance = 0M }
+    transactions
+    |> List.sortBy (fun trans -> trans.Timestamp)
+    |> List.fold (fun acct trans -> accumulateTransaction acct trans) openingAccount
+
+let acct2 = loadAccount2 ("Romney1", Guid.Empty, testtransactions)
+;;

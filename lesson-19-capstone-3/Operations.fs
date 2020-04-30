@@ -27,4 +27,17 @@ let auditAs operationName audit operation amount account =
     audit account.AccountID account.Owner.Name transaction
     updatedAccount  
 
-    
+
+let accumulateTransaction account transaction =
+    if transaction.Operation = "deposit"
+        then deposit transaction.Amount account
+    elif transaction.Operation = "withdraw"
+        then withdraw transaction.Amount account
+    else account
+
+/// Recreates an account from a list transactions
+let loadAccount2 (owner, accountID, transactions) =
+    let openingAccount = { AccountID = accountID; Owner = { Name = owner };  Balance = 0M }
+    transactions
+    |> List.sortBy (fun trans -> trans.Timestamp)
+    |> List.fold (fun acct trans -> accumulateTransaction acct trans) openingAccount

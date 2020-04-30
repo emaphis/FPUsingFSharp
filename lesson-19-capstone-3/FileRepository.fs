@@ -6,7 +6,7 @@ open System.IO
 open System
 
 let private accountsPath =
-    let path = @"zipperdue"
+    let path = @"accounts"
     Directory.CreateDirectory path |> ignore
     path
 let private findAccountFolder owner =    
@@ -18,7 +18,6 @@ let private findAccountFolder owner =
 
 let private buildPath(owner, accountId:Guid) = 
     let file = sprintf @"%s\%s_%O" accountsPath owner accountId
-//    Console.WriteLine(file)
     file
 
 /// Logs to the file system
