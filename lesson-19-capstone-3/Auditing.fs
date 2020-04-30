@@ -4,7 +4,8 @@ open Capstone3.Domain
 open System.IO
 
 /// Logs to the console
-let printTransaction _ accountId message = printfn "Account %O: %s" accountId message
+let printTransaction _ accountID trans =
+    printf "Account: %O: %s of %M (approved: %b)" accountID trans.Operation trans.Amount trans.Accepted
 
 // Logs to both console and file system
 let composedLogger = 

@@ -6,8 +6,8 @@ open Capstone3.Domain
 open Capstone3.Operations
 
 
-let withdrawWithAudit = auditAs "withdraw" Auditing.printTransaction withdraw
-let depositWithAudit = auditAs "deposit" Auditing.printTransaction deposit
+let withdrawWithAudit = auditAs "withdraw" Auditing.composedLogger withdraw
+let depositWithAudit = auditAs "deposit"   Auditing.composedLogger deposit
 
 /// Checks whether the command is one of (d)eposit, (w)ithdraw, ore(x)it.
 let isValidCommand (command : char) =
@@ -37,8 +37,8 @@ let getAmountConsole command =
 let processCommand (account: Account) (command: char, amount: decimal) =
     printfn ""
     let account =
-        if command = 'd' then deposit amount account
-        elif command = 'w' then withdraw amount account
+        if command = 'd' then depositWithAudit amount account
+        elif command = 'w' then withdrawWithAudit amount account
         else account
     printfn "Current balance is $%M" account.Balance
     account
@@ -50,11 +50,7 @@ let main _ =
         Console.Write "Please enter your name: "
         Console.ReadLine()
     
-    let accountID =
-        Console.Write "Please enter account id: "
-        Console.ReadLine()
-
-    let openingAccount = { Owner = { Name = name }; Balance = 0M; AccountID = accountID } 
+    let openingAccount = { Owner = { Name = name }; Balance = 0M; AccountID = Guid.Empty } 
     
     printfn "Current balance is £%M" openingAccount.Balance
 
@@ -66,7 +62,7 @@ let main _ =
         |> Seq.map getAmountConsole
         |> Seq.fold processCommand openingAccount
  
-    Console.Clear()
+    //Console.Clear()
     printfn "Closing Balance:\r\n %A" closingAccount
     Console.ReadKey() |> ignore
 

@@ -40,7 +40,7 @@ let processCommand1 (account: Account) (command : (char * decimal)) =
  /////////////////////
 
 let openingAccount =
-   { Owner = {Name = "Charley"}; Balance = 0M; AccountID = "1001" }
+   { Owner = {Name = "Charley"}; Balance = 0M; AccountID = Guid.Empty }
 
 
 let account1 =

@@ -6,7 +6,7 @@ open System.IO
 open System
 
 let private accountsPath =
-    let path = @"accounts"
+    let path = @"zipperdue"
     Directory.CreateDirectory path |> ignore
     path
 let private findAccountFolder owner =    
@@ -15,11 +15,17 @@ let private findAccountFolder owner =
     else
         let folder = Seq.head folders
         DirectoryInfo(folder).Name
-let private buildPath(owner, accountId:Guid) = sprintf @"%s\%s_%O" accountsPath owner accountId
+
+let private buildPath(owner, accountId:Guid) = 
+    let file = sprintf @"%s\%s_%O" accountsPath owner accountId
+//    Console.WriteLine(file)
+    file
 
 /// Logs to the file system
-let writeTransaction accountId owner message =
-    let path = buildPath(owner, accountId)    
+let writeTransaction accountID owner (trans : Transaction) =
+    let path = buildPath(owner, accountID)
     path |> Directory.CreateDirectory |> ignore
-    let filePath = sprintf "%s/%d.txt" path (DateTime.UtcNow.ToFileTimeUtc())
-    File.WriteAllText(filePath, message)
+    let filePath = sprintf "%s/%d.txt" path (trans.Timestamp.ToFileTimeUtc())
+    let line = sprintf "%O***%s***%M***%b" trans.Timestamp trans.Operation trans.Amount trans.Accepted
+    File.WriteAllText(filePath, line)
+ 
