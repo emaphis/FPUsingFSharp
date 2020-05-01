@@ -23,6 +23,7 @@
     <None Include="Lesson17.fsx" />
     <Compile Include="Lesson18Parser.fs" />
     <None Include="Lesson18.fsx" />
+    <None Include="Lesson20.fsx" />
     <None Include="FilesAndDirectories.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>

@@ -13,4 +13,6 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup />
+
 </Project>
