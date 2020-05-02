@@ -26,6 +26,7 @@
     <None Include="Lesson18FileSystem .fsx" />
     <None Include="Lesson18.fsx" />
     <None Include="Lesson20.fsx" />
+    <None Include="Lesson21.fsx" />
     <None Include="FilesAndDirectories.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
