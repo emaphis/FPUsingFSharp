@@ -261,6 +261,7 @@ match customer1.Name with
 
 
 (* Try this  - pg 243
+TODO:  Completet this
 Experiment with pattern matching over lists, tuples, and records. Start by creating a
 random list of numbers of variable length and writing pattern matches to test whether
 the list
@@ -272,4 +273,40 @@ Then experiment with pattern matching over a record. Continue with the filesyste
 a folder is large, based on average file size or count of files.
 *)
 
+open System
+open System.IO
 
+let path = @"C:\Testing\"
+
+/// Represents a directory and a list of files that belong to that directory
+/// - created by the groupBy function
+type DirInfo = string * FileInfo list
+
+/// get list names of subdirectories of passed dir
+let getSubDirectories path =
+    Directory.GetDirectories path
+    |> Array.toList
+
+/// given a dir get a list of fileInfo in directory
+let getFileList dir =
+    Directory.GetFiles(dir)
+    |> Array.map (fun file -> FileInfo(file))
+    |> Array.toList
+
+/// get a list of files on a given path
+/// list of files should be grouped by dir
+let getDirFileList path : DirInfo list =
+    getSubDirectories path          // get subdirectories of dir
+    |> List.collect getFileList     // get list of files in directories
+    |> List.groupBy (fun file -> file.DirectoryName)
+
+
+let analyzeDir path =
+    let list = getDirFileList path
+               |> List.collect (fun (dir, lst)  -> lst)
+    match list with
+    | [] -> ()
+    | [x] -> ()
+    | _ -> ()
+
+let listoffiles = analyzeDir path
