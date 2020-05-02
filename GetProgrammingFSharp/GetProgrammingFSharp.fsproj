@@ -21,7 +21,9 @@
     <None Include="Lesson15.fsx" />
     <None Include="Lesson16.fsx" />
     <None Include="Lesson17.fsx" />
+    <None Include="Lesson17FileSystem.fsx" />
     <Compile Include="Lesson18Parser.fs" />
+    <None Include="Lesson18FileSystem .fsx" />
     <None Include="Lesson18.fsx" />
     <None Include="Lesson20.fsx" />
     <None Include="FilesAndDirectories.fsx" />

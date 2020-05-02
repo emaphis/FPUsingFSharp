@@ -278,21 +278,19 @@ A- No. They don't exist as a runtime component.
 
 
 (* Try this - pg. 218
-// TODO: See Lesson 17 pg 205
+See Lesson 17 pg 205
 Create a simple rules engine over the filesystem example from the previous lesson. The
 engine should filter out files that don’t pass certain checks, such as being over a specific
 file size, having a certain extension, or being created before a specific date. Have you
 ever created any rules engines before? Try rewriting them in the style we defined in this
 lesson
+
+See Lesson18FileSystem.fsx
 *)
 
 
-
-
-
-
-
 ///////////////////////////
+// impelemented an example of fold
 let myFold folder state source =
     let mutable acc = state
     for input in source do
