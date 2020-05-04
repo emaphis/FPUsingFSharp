@@ -13,7 +13,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "lesson-12", "lesson-12\less
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "lesson-14-capstone-2", "lesson-14-capstone-2\lesson-14-capstone-2.fsproj", "{189B8C07-E498-4AF2-981F-CB4FD5E8E33A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "lesson-19-capstone-3", "lesson-19-capstone-3\lesson-19-capstone-3.fsproj", "{2209EA25-F4B1-433D-BB9E-E630EE295454}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "lesson-19-capstone-3", "lesson-19-capstone-3\lesson-19-capstone-3.fsproj", "{2209EA25-F4B1-433D-BB9E-E630EE295454}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "lesson-24-capstone-4", "lesson-24-capstone-4\lesson-24-capstone-4.fsproj", "{7FD76CDA-8F02-44A0-AFCB-FA739235A52B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2209EA25-F4B1-433D-BB9E-E630EE295454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2209EA25-F4B1-433D-BB9E-E630EE295454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2209EA25-F4B1-433D-BB9E-E630EE295454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FD76CDA-8F02-44A0-AFCB-FA739235A52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FD76CDA-8F02-44A0-AFCB-FA739235A52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FD76CDA-8F02-44A0-AFCB-FA739235A52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FD76CDA-8F02-44A0-AFCB-FA739235A52B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
