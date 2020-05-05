@@ -165,4 +165,56 @@ let findAccountFolder2 owner =
 findAccountFolder2 "Fred1"
 
 
-///
+/// 24.4 Implementing business rules with types
+
+(*
+A user can go into an overdrawn state (draw out more funds than they have in their account).
+But after the account has become overdrawn, the user can’t draw out any more funds (although
+they can still deposit funds). After the balance returns to a non-negative state, the user can withdraw
+funds once again.
+*)
+
+type CreditAccount4 = CreditAccount4 of Account1
+type RatedAccout4 =
+    | InCredit of CreditAccount4
+    | Overdrawn of Account1
+
+/// 24.4.1 Testing a model with scripts
+
+/// Listing 24.10 Safe operations on a bank account - pg 294
+let classifyAccount4 account =
+    if account.Balance >= 0M then (InCredit(CreditAccount4 account))
+    else Overdrawn account
+
+let withdraw4 amount (CreditAccount4 account) =
+    { account with Balance = account.Balance - amount }
+    |> classifyAccount4
+
+let deposit4 amount account =
+    let account =
+        match account with
+        | InCredit (CreditAccount4 account) -> account
+        | Overdrawn account -> account
+    { account with Balance = account.Balance + amount}
+    |> classifyAccount4
+
+/// Listing 24.11 A safe withdrawal wrapper
+let withdrawSafe4 amount ratedAccount =
+    match ratedAccount with
+    | InCredit account -> withdraw4 amount account
+    | Overdrawn _ ->
+        printfn "Your account is overdrawn - withdrawal rejected!"
+        ratedAccount  // return input back out
+
+
+let goodAcct = openingAccount1 |> classifyAccount4
+
+let badAccount = { Owner = { Name = "Who"}
+                   AccountId = Guid.Empty
+                   Balance = -100M }
+
+let badAcct = badAccount |> classifyAccount4
+
+
+goodAcct |> withdrawSafe4 40M
+badAcct |> withdrawSafe4 40M
