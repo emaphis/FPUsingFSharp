@@ -12,8 +12,21 @@ let loadAccountFromDisk = FileRepository.findTransactionsOnDisk >> Operations.lo
 
 [<AutoOpen>]
 module CommandParsing =
-    let isValidCommand cmd = [ 'd'; 'w'; 'x' ] |> List.contains cmd
-    let isStopCommand = (=) 'x'
+    type BankOperation = Deposit | Withdraw
+    type Command = AccountCmd of BankOperation | Exit
+
+ let tryParseCommand command =
+        match command with
+        | 'w' -> Some(AccountCmd Withdraw)
+        | 'd' -> Some(AccountCmd Deposit)
+        | 'x' -> Some Exit
+        | _ -> None
+
+    let tryGetBankOperation cmd =
+        match cmd with
+        | Exit  -> None
+        | AccountCmd cmd -> Some cmd
+
 
 [<AutoOpen>]
 module UserInput =
@@ -39,15 +52,17 @@ let main _ =
     let processCommand account (command, amount) =
         printfn ""
         let account =
-            if command = 'd' then account |> depositWithAudit amount
-            else account |> withdrawWithAudit amount
+            match command with
+            | Deposit -> depositWithAudit amount account
+            | Withdraw -> withdrawWithAudit amount account
         printfn "Current balance is £%M" account.Balance
         account
 
     let closingAccount =
         commands
-        |> Seq.filter isValidCommand
-        |> Seq.takeWhile (not << isStopCommand)
+        |> Seq.choose tryParseCommand
+        |> Seq.takeWhile ((<>) Exit)
+        |> Seq.choose tryGetBankOperation
         |> Seq.map getAmount
         |> Seq.fold processCommand openingAccount
     
