@@ -40,6 +40,12 @@ let withdraw1 amount account =
     
 let deposit1 amount account =
     { account with Balance = account.Balance + amount }
+
+let getAmount1 command =
+    Console.WriteLine()
+    Console.Write "Enter Amount: "
+    command, Console.ReadLine() |> Decimal.Parse
+
     
 let processCommand1 account (command, amount) =
     printfn ""
@@ -50,11 +56,6 @@ let processCommand1 account (command, amount) =
         | Exit  -> account
     printfn "Current balance is £%M" account.Balance
     account
-
-let getAmount1 command =
-    Console.WriteLine()
-    Console.Write "Enter Amount: "
-    command, Console.ReadLine() |> Decimal.Parse
 
 let openingAccount1 = 
     { AccountId = Guid.Empty; Owner = { Name = "Fred" }; Balance = 100M }
@@ -69,7 +70,7 @@ commands
 
 
 /// 24.2.3 Tightening the model further
-
+/// Listing 24.3 Creating a two-level discriminated union pg 288
 type BankOperation2 = Deposit | Withdraw
 type Command2 = AccountCmd of BankOperation2 | Exit
 
@@ -106,3 +107,62 @@ commands2
     |> List.fold processCommand2 () //openingAccount1
 
 
+/// 24.3 Applying Option types with the outside world
+/// 24.3.1 Parsing user input
+
+let getAmount3 command =
+    Console.WriteLine()
+    Console.Write "Enter Amount: "
+    command, Console.ReadLine() |> Decimal.Parse
+
+let tryGetAmount3 (command: BankOperation2) =
+  //  Console.WriteLine()
+  //  Console.Write "Enter Amount: xxx:"
+  //  let amount =  Console.ReadLine() |> Decimal.TryParse
+    let amount =  true, 100M
+    match amount with
+    | true, amount -> Some(command, amount)
+    | false, _ -> None
+
+
+let processCommand3 account (command, amount) =
+   // printfn ""
+    let account =
+        match command with
+        | Deposit -> printfn "Deposit %M" amount
+        | Withdraw -> printfn "Withdraw %M" amount
+     //   printfn "Current balance is £%M" account.Balance
+    account
+
+let commands3 = ['d'; 'a'; 'b'; 'k'; 'w'; 'd'; 'x'; 'w' ]
+
+commands3
+    |> List.choose tryParseCommand2
+    |> List.takeWhile (not << isStopCommand2)
+    |> List.choose tryGetBankOperation
+    |> List.map tryGetAmount3
+    |> List.choose (fun x -> x)
+    |> List.fold processCommand3 () //openingAccount1
+
+
+
+/// Listing 24.5 Unintentionally hiding optionality with a default value pg 290
+
+open System.IO
+
+let accountsPath2 =
+    let path = @"accounts"
+    Directory.CreateDirectory path |> ignore
+    path
+
+let findAccountFolder2 owner =  
+    let folders = Directory.EnumerateDirectories(accountsPath2, sprintf "%s_*" owner)
+    if Seq.isEmpty folders then printfn "got here iiiii"; ""
+    else
+        let folder = Seq.head folders
+        DirectoryInfo(folder).Name
+
+findAccountFolder2 "Fred1"
+
+
+///
