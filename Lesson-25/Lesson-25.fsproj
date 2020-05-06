@@ -3,7 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Lesson_25</RootNamespace>
+    <RootNamespace>lesson_25</RootNamespace>
+    <AssemblyName>lesson-25</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
