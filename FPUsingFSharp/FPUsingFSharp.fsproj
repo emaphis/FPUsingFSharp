@@ -5,10 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Chap01Examples.fs" />
-    <Compile Include="Chap01Exercises.fs" />
-    <Compile Include="Chap02Examples.fs" />
-    <Compile Include="Chap02Exercises.fs" />
+    <None Include="Chap01Examples.fsx" />
+    <None Include="Chap01Exercises.fsx" />
+    <None Include="Chap02Examples.fsx" />
+    <None Include="Chap02Exercises.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
