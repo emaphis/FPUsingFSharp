@@ -1,8 +1,8 @@
-﻿module Chap02Examples
+﻿//// Values, operators, expressions and functions  - pg 21.
 
-/// Values, operators, expressions and functions
 
-/// 2.1 Numbers. Truth values. The unit type
+/// 2.1 Numbers. Truth values. The unit type  - pg 21.
+
 // ints
 let int1 = 0
 let int2 = 1001
@@ -13,12 +13,13 @@ let flt1 = 0.0
 let flt2 = -7.235
 let flt3 = 1.23e-17
 
-// operators
+// int operators
 
 let op1 = 2 - - -1
 
 let op2 = 13 / -5
 let op3 = 13 % -5
+
 
 // Truth values
 
@@ -28,17 +29,23 @@ let bl2 = false
 let bl3 = not true = false
 let bl4 = true <> false
 
+// truth value operators
+let even n = n % 2 = 0
+let fls = not true <> false
+
+
 // The unit type
 
 let unt = ()
 
 
-/// 2.2 Operator precedence and association
+/// 2.2 Operator precedence and association  - pg 23
 
-//let pred1 = (- 2 - 5 * 7 > 3 - 1) = ((- 2) - (5 * 7)) > (3 - 1)
+let pred1 = (- 2 - 5 * 7 > 3 - 1)
+((- 2) - (5 * 7)) > (3 - 1)
 
 
-/// 2.3 Characters and strings
+/// 2.3 Characters and strings  - pg 24
 
 let chr1 = 'a'
 let chr2 = ' '
@@ -48,9 +55,11 @@ let str1 = "abcd----"
 let str2 = "\"1234\""
 let str3 = ""
 
+
 // verbatim strings
 let str4 = @"\\\\"
 let str5 = "\\\\"
+
 
 // functions on strings
 
@@ -75,6 +84,8 @@ let ans11 = string -4
 let ans12 = string 7.89
 let ans13 = string true
 
+
+/// using the conversion function
 let nameAge(name, age) =
     name + " is " + (string age) + " years old"
 
@@ -85,13 +96,13 @@ let ans16 = string (12, 'a')
 let ans17 = string nameAge
 
 
-/// 2.4 If-then-else expressions
+/// 2.4 If-then-else expressions  - pg 28
 
 // if exp1 then exp2 else exp3
 
-let even n = n % 2 = 0
+let even2 n = n % 2 = 1
 
-let adjString s = if even(String.length s)
+let adjString s = if even2(String.length s)
                   then s else " " + s
 
 let ans18 = adjString "123"
@@ -102,7 +113,8 @@ let rec gcd(m, n) =
     else gcd(n % m, m)
 
 
-/// 2.5 Overloaded functions and operators
+
+/// 2.5 Overloaded functions and operators  - pg 29
 
 //let square (x: int) = x * x
 //let square (x: float) = x * x
@@ -115,26 +127,28 @@ let ovl4 = abs -1.0
 let ovl5 = abs -3.2f
 
 
-// 2.6 Type inference
+// 2.6 Type inference  - pg 31
 
 // float * int -> float
 let rec power = function
     | (x, 0) -> 1.0
     | (x, n) -> x * power(x, n-1)
+// compiler deduced the functions type with 1.0
 
 
-/// 2.7 Functions are first-class citizens
+/// 2.7 Functions are first-class citizens  - pg 31.
 
 // The value of a function can be a function
 
 let fn1 = (+) // int -> int -> int
 // or associates right - int -> (int -> int)
 
-let plusThree = (+) 3
+let plusThree = (+) 3  // (int -> int)
 
 let res1 = plusThree 5 
 let res2 = ((+) 3) 5
 let res3 = (+) 3 5
+
 
 // The argument of a function can be a function
 
@@ -144,14 +158,17 @@ let g = fun x -> x*x
 
 // h = (f . g)
 let h = f << g
+
 let res4 = h 4
 // or
 let res5 = ((fun y -> y+3) << (fun x -> x*x)) 4
+
 
 // Declaration of higher-order functions
 
 let weight ro = fun s -> ro * s ** 3.0
 
+// partial evaluation
 let waterWeight  = weight 1000.0
 
 let res6 = waterWeight 1.0
@@ -163,9 +180,13 @@ let res8 = methanolWeight 1.0
 let res9 = methanolWeight 2.0
 
 
-/// 2.8 Closures
+/// 2.8 Closures  - pg 33
 
+// function as a value is a triple
 // (x, exp, env)
+// x is an agrument
+// exp is the expression to evaluate
+// env is the environment
 
 // environment
 let pi = System.Math.PI
@@ -181,7 +202,7 @@ let circleArea r = pi * r * r
 let cl1 = circleArea 1.0
 
 
-/// 2.9 Declaring prefix and infix operators
+/// 2.9 Declaring prefix and infix operators  - pg 35
 
 // infix:  ! % & * + - . / < = > ? @ ˆ | ˜
 // prefix; + - +. -. & && % %%
@@ -211,7 +232,7 @@ let eqTxt x y =
 // when 'a : equality
 
 let ord1 = eqTxt 3 4
-let ord2 = eqTxt ' '  (char 32) 
+let ord2 = eqTxt ' '  (char 32)
 
 // Ordering
 // > >= < <=
@@ -228,7 +249,8 @@ let ordText x y = match compare x y with
                   | _             -> "less"
 
 
-/// 2.11 Function application operators |> and <|
+
+/// 2.11 Function application operators |> and <|  - pg 38
 
 // arg |> fct means fct arg
 // fct <| arg means fct arg
