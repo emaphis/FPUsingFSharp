@@ -1,6 +1,5 @@
-﻿module File1
+﻿////  Getting started - Exercises  pg 20
 
-open System
 
 /// Chaper 1 exercises.
 
@@ -9,23 +8,32 @@ open System
 
 let g n = n + 4
 
-let g_Test0 = g 0 = 4
-let g_Test1 = g 4 = 8
+g 0 = 4
+g 4 = 8
 
 
-// 1.2 Declare a function h: float * float -> float, where h(x, y) =
+/// 1.2 Declare a function h: float * float -> float, where h(x, y) =
 //     (x2 + y2). Hint: Use the function System.Math.Sqrt.
 
-let h (x, y) = Math.Sqrt (x*x + y*y)
+let h (x, y) = System.Math.Sqrt (x*x + y*y)
 
-let h_Exmp0 = h(2., 2.)  // 2.828427125
+h (1., 1.)
+h (2., 2.)  // 2.828427125
+h (3., 5.)
 
 
-// 1.3 Write function expressions corresponding to the functions g and h in
-// the exercises 1.1 and 1.2.
+/// 1.3 Write function expressions corresponding to the functions g and h in
+//      the exercises 1.1 and 1.2.
 
 let g' = function n -> n + 4
-let h' = function (x, y) -> Math.Sqrt (x**2. + y**2.)
+
+g' 0 = 4
+g' 4 = 8
+
+let h' = function (x, y) -> System.Math.Sqrt (x**2. + y**2.)
+
+h' (3., 5.)
+
 
 // 1.4 Declare a recursive function f: int -> int, where
 //         f(n) = 1+2+· · · + (n − 1) + n
@@ -35,9 +43,9 @@ let h' = function (x, y) -> Math.Sqrt (x**2. + y**2.)
 
 let rec f  = function
     | 0 -> 0
-    | x -> x + f (x-1) 
+    | n -> n + f (n-1) 
 
-let f_Test1 = f 4
+f 4 = 10
 
 (*
 
@@ -66,15 +74,19 @@ f 4 -> f (4 - 1) + 4
 //     correspond to the three cases of the above definition.
 //     Give an evaluations for F4.
 
-let fib = function
+let rec fib = function
     | 0 -> 0
     | 1 -> 1
-    | n -> f(n-1) + f(n-2)
+    | n -> fib(n-1) + fib(n-2)
 
 // 0, 1, 1, 2, 3, 5, 8, 13,
-let fib_0 = fib 0 = 0
-let fib_1 = fib 1 = 1
-let fib_2 = fib 2 = 1
+fib 0 = 0
+fib 1 = 1
+fib 2 = 1
+fib 3 = 2
+fib 4 = 3
+fib 5 = 5
+fib 6 = 8
 
 
 // 1.6 Declare a recursive function sum: int * int -> int, where
@@ -89,11 +101,11 @@ let rec sum = function
 // sum(m, n) = (m + 0) + (m + 1) + (m + 2) + · · · + (m + (n − 1)) + (m + n)
 
 // sum(3,0) = (3+0) -> 3
-let sumTest1 = sum(3,0) = 3
+sum(3,0) = 3
 
 // sum(3, 2) = (3 + 0) + (3 + 1) + (3 + 2)
 //              3 + 4 + 5 -> 12
-let sumTest2 = sum(3,2) = 12
+sum(3,2) = 12
 
 
 // 1.7 Determine a type for each of the expressions:
