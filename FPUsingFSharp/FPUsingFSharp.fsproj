@@ -10,6 +10,7 @@
     <None Include="Chap02Examples.fsx" />
     <None Include="Chap02Exercises.fsx" />
     <None Include="Chap03Examples.fsx" />
+    <None Include="Chap03Exercises.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
